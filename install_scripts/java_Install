@@ -1,7 +1,0 @@
-#!/bin/bash
-#this is the java install script
-yum install java-1.8.0-openjdk-devel
-java -version
-update-alternatives --config java
-
-
