@@ -1,0 +1,1 @@
+{ "_id" : "108A8CFC05CC3139A6E65B7A4239F5C6-0-151-159-167-181-CoLocated", "begin" : 160, "end" : 166, "sourceBegin" : 151, "sourceEnd" : 159, "source" : "mourners", "targetBegin" : 167, "targetEnd" : 181, "target" : "a funeral tent", "type" : "CoLocated", "value" : "inside", "documentId" : "108A8CFC05CC3139A6E65B7A4239F5C6", "confidence" : 1 }
