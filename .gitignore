@@ -1,0 +1,11 @@
+<<<<<<< Updated upstream
+=======
+# For the uninitiated, this is a GitIgnore file.
+# It tells Git which files to ignore when committing.
+
+# Folders
+/flask/.idea
+
+# Files
+.DS_Store
+>>>>>>> Stashed changes
