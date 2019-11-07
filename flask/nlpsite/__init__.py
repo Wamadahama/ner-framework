@@ -36,7 +36,7 @@ def create_app(test_config=None):
 
     @app.route("/")
     def index():
-        return render_template("base.html")
+        return render_template("input.html")
 
     # app.add_url_rule("/", endpoint="index")
 
