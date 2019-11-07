@@ -40,8 +40,6 @@
 	</style>
     </head>
 
-    <body>
-
 	<div role="main" class="container">
 
 	    <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -70,6 +68,8 @@
 		    </ul>
 		</div>
 	    </nav>
-
-</body>
-</html>
+        <div>
+            {% block body %} {% endblock %}
+        </div>
+    </div>
+{% include "footer.html" %}
