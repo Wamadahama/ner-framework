@@ -1,7 +1,8 @@
 -- entity tables 
 create table EntityType (
        id integer primary key autoincrement,
-       EntityName text NOT NULL,
+       ModelId integer, 
+       EntityName text NOT NULL
 );
 
 create table EntityAttributes (
@@ -20,7 +21,7 @@ create table Corpus (
 create table ModelResult (
        id integer primary key autoincrement,
        EntityType id NOT NULL,
-       ModelName  text NOT NULL, -- might not need 
+       ModelId int not null
 );
 
 create table Categorization (
@@ -31,6 +32,12 @@ create table Categorization (
        Certainty integer NOT NULL 
 );
 
+create table Model(
+       id integer primary key autoincrement,
+       ModelName text,
+       ModelDescription text,
+       Observations int
+)
 
 -- web page tables 
 -- might need to add more tables that would drive the website 

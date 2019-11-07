@@ -86,15 +86,14 @@
 
 		    <div class="pad-to-center">
 
-
 			<h4>Select model</h4>
 
 			<div class="input-group">
 			    <select id="model-select" class="custom-select" onChange="dummy_select(this.selectedIndex)">
-				<option>Select a model...</option>
-				<option>re3d model</option>
-				<option>SITREP model</option>
-				<option>CASREP model</option>
+				<option>Select a model</option>
+				{% for model in models  %}
+				    <option>{{ model[1] }}</option>
+				{% endfor %}
 			    </select>
 
 			</div>
