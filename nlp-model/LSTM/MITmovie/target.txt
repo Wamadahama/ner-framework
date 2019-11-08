@@ -1,1 +1,1 @@
-I-Relationship, B-Quote, B-Origin, I-Award, I-Soundtrack, B-Actor, I-Director, I-Year, B-Character_Name, B-Award, B-Genre, B-Soundtrack, I-Character_Name, B-Year, B-Plot, B-Relationship, I-Plot, I-Actor, B-Opinion, I-Opinion, I-Genre, O, B-Director, I-Quote, I-Origin
+B-Character_Name, B-Genre, I-Award, I-Genre, B-Year, O, B-Soundtrack, I-Quote, B-Origin, I-Opinion, B-Plot, I-Relationship, I-Origin, B-Opinion, B-Award, I-Plot, I-Soundtrack, I-Year, I-Character_Name, I-Actor, B-Actor, B-Relationship, I-Director, B-Quote, B-Director
