@@ -16,17 +16,19 @@
 			<h4>Select model</h4>
 
 			<div class="input-group">
-			    <select id="model-select" class="custom-select" onChange="dummy_select(this.selectedIndex)">
-				<option>Select a model</option>
-				{% for model in models  %}
-				    <option>{{ model[1] }}</option>
-				{% endfor %}
+			    <select id="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
+					<option value='test1'>test1</option>
+					<option value='test2'>test2</option>
+					<option value='test3'>test3</option>
+				<!--{% for model in models  %}
+				    <option>{{ model[3] }}</option>
+				{% endfor %}-->
 			    </select>
 
 			</div>
 
 			<div class="input-group float-right grp">
-			    <a href="input.html" class="btn btn-primary float-right">Select Model</a>
+			    <a href="/input.html" class="btn btn-primary float-right">Select Model</a>
 			</div>
 
 

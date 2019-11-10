@@ -1,15 +1,20 @@
 </body>
     <script>
-     $(document).ready(function() {
+    /* $(document).ready(function() {
 	 $('.model-description').toggle();
      });
 
-     function dummy_select(idx) {
-	 if(idx == 0) {
-	     $('.model-description').hide();
-	 } else {
-	     $('.model-description').show();
-	 }
-     }
+    function dummy_select(idx) {
+	if(idx == 0) {
+	    $('.model-description').hide();
+	} else {
+	    $('.model-description').show();
+	}
+    }
+    */
+    function updateSelectedModel(value){
+        var input = document.getElementById('selectedModel').innerHTML = value 
+    }
+
     </script>
 </html>
