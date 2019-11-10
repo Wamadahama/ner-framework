@@ -51,6 +51,10 @@ def close_connection(exception):
 def index():
     return render_template("index.html", models=models)
 
+@app.route('/input')
+def input():
+    return render_template("input.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8000)

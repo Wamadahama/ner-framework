@@ -1,1 +1,16 @@
 {% extends "header.html" %}
+
+{% block body %}
+    <div class="col-lg-8">
+        <div class="pad-to-center">
+        <h4>Enter raw text</h4>
+        <div class="input-group grp">
+            <textarea rows="4" cols="80"></textarea>
+        </div>
+        <br>
+        <div class="input-group">
+            <button class="btn btn-primary btn-lg btn-block float-right">Extract</button>
+        </div>
+        </div>
+    </div>
+{% endblock %}
