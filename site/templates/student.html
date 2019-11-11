@@ -1,0 +1,21 @@
+<html>
+      <link href="static/bootstrap.min.css" rel="stylesheet">
+		<script src="{{ url_for('static', filename='jquery-3.2.1.slim.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+   <body>
+      <form action="/input" method = "POST">
+						<div class="input-group">
+							<select>
+							<option>Select a model</option>
+
+								{% for model in models %}
+									<option>{{ model[0] }}</option>
+								{% endfor %}
+
+							</select>
+							<input type="submit" value="Select model">
+						</div>
+					</form>
+   </body>
+</html>

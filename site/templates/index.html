@@ -1,39 +1,31 @@
 {% extends "header.html" %}
 {% block body %}
-		<!--Code-->
+		<!--Body-->
 
 	    <div class="row justify-content-md-center justify-content-lg-center">
-		
-		<div class="col-lg-10">
-		    
-		    <div class="model-description pad-down">
-			<h4>Model Description</h4> 
-			<p id='modelDesc'> </p>
-		    </div>
+			<div class="col-lg-10">
+				<div class="model-description pad-down">
+					<h4>Model Description</h4>
+					<p id='modelDesc'> </p>
+				</div>
+				<div class="pad-to-center">
+					<h4>Select model</h4>
 
-		    <div class="pad-to-center">
+					<form action="/input" method = "POST">
+						<div class="input-group">
+							<select id="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
+							<option>Select a model</option>
 
-			<h4>Select model</h4>
+								{% for model in models %}
+									<option>{{ model[0] }}</option>
+								{% endfor %}
 
-			<div class="input-group">
-			    <select id="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
-				<option>Select a model</option>
-
-					{% for model in models %}
-						<option>{{ model[0] }}</option>
-					{% endfor %}
-
-			    </select>
-
+							</select>
+							<input type="submit" value="Select model">
+						</div>
+					</form>
+				</div>
 			</div>
-
-			<div class="input-group float-right grp">
-			    <a href="/input" class="btn btn-primary float-right">Select Model</a>
-			</div>
-
-
-		    </div>
-		</div>
 	    </div>
 
 {% endblock %}
