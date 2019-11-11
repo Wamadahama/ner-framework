@@ -49,12 +49,13 @@ def bad_code_error(e):
 
 @app.route("/")
 def index():
-    # example select
+# example select
 #    cur = g.db.execute('Select * from Corpus')
 #    rows = cur.fetchall()
-#    print(rows)
-    # example insert
+# example insert
 #    cur = g.db.execute('Insert Into Corpus (EntityType, RawText) Values (1, "Test Text")')
+#    g.db.commit()
+
     cur = g.db.execute('Select * from Model')
     rows = cur.fetchall()
     return render_template("index.html", models=rows)
@@ -64,5 +65,3 @@ def index():
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
 
-
-    
