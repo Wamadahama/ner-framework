@@ -102,5 +102,9 @@ class ExtractionModel:
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
                     word = pair['word']
+
+                    if pred > 25:
+                        pred = 5
+                    
                     category = self.categories[pred]
                     print("{:14}: {}".format(word,category))
