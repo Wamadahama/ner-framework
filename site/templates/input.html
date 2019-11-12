@@ -1,13 +1,9 @@
 {% extends "header.html" %}
 
 {% block body %}
-	<table border = 1>
-         {% value = result.items() %}
-            <tr>
-               <td> {{ value }} </td>
-            </tr>
-         {% endfor %}
-	</table>
+
+
+	Selected Model: {{ selected }}	
 
     <div class="col-lg-8">
         <div class="pad-to-center">

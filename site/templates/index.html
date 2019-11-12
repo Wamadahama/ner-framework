@@ -13,11 +13,11 @@
 
 					<form action="/input" method = "POST">
 						<div class="input-group">
-							<select id="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
-							<option>Select a model</option>
+							<select id="model-select" name="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
+							<option value="1">Select a model</option>
 
 								{% for model in models %}
-									<option>{{ model[0] }}</option>
+									<option value="{{ model[0] }}">{{ model[0] }}</option>
 								{% endfor %}
 
 							</select>

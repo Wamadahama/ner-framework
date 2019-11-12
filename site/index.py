@@ -17,8 +17,9 @@ app.config.from_object(__name__)
 conn = sqlite3.connect('nlp4nm.db')
 c = conn.cursor()
 
+
 c.execute('SELECT {cn} FROM {tn}'.\
-        format(tn='model', cn='ModelName'))
+          format(tn='model', cn='ModelName'))
 models = c.fetchall()
 
 # App routes
@@ -32,8 +33,11 @@ def index():
 @app.route("/input", methods=['POST', 'GET'])
 def input():
     if request.method == 'POST':
-        result = request.form
-        return render_template("input.html", result=result)
+        result = request.form.get("model-select")
+        selected_model = str(result)
+        return render_template("input.html", selected=selected_model)
+    elif request.method == 'GET':
+        return render_template("input.html", result=None)
 
 
 if __name__ == '__main__':
