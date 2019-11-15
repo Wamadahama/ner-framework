@@ -93,18 +93,18 @@ class ExtractionModel:
 
         # perform extraction
         prediction = self.Model.predict(np.array([input_vector]))
-        #print(prediction)
         prediction = np.argmax(prediction, axis=-1)
-        #print(prediction)
 
-        print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
+
+        #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
+        return_dict = {}
         for w,pred in zip(input_vector, prediction[0]): 
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
                     word = pair['word']
-
                     if pred > 25:
                         pred = 5
-                    
                     category = self.categories[pred]
-                    print("{:14}: {}".format(word,category))
+                    return_dict[word] = category
+        return return_dict
+
