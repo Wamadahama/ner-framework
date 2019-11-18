@@ -1,4 +1,4 @@
-from dataset_management import DataHandler
+from dataset import DataHandler
 
 d_set1 = DataHandler('../../../nlp-model/dataset/MITMovie_dataset.csv')
 
