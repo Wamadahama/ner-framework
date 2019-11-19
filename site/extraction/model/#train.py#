@@ -7,9 +7,10 @@ class ModelTrainer:
     def train(model, dataset):
         try:
             # Get the layers of the model and then train 
-            sentences = dataset.getStentences()
+            sentences = dataset.gettentences()
             X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = dataset.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
             model_layout = model.get_model()
+
             model_layout.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
             model_layout.fit(X_TRAIN, Y_TRAIN, validation_split=0.1,
                              batch_size=model.batch_size, epochs=model.epochs)
