@@ -52,15 +52,15 @@
 			    <a class="nav-link big-link">NLP4NM</strong>&nbsp; |</a>
 			    <div class="vertical-line"></div>
 			</li>
-			<li class="nav-item small-link">
+			<li {% if request.path == '/' %} class="active"{% endif %} class="nav-item small-link">
 			    <a class="nav-link" href="/">Select model <span class="sr-only">(current)</span></a>
 			</li>
 			<li>&nbsp;</li>
-			<li class="nav-item small-link active">
+			<li {% if request.path == '/input' %} class="active"{% endif %} class="nav-item small-link">
 			    <a class="nav-link" href="/input">Input message</a>
 			</li>
-			<li class="nav-item small-link">
-			    <a class="nav-link" href="">Results</a>
+			<li {% if request.path == '/output' %} class="active"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/output">Results</a>
 			</li>
 		    </ul>
 

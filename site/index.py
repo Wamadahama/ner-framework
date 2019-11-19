@@ -86,7 +86,9 @@ def input():
 
 @app.route("/output", methods=['POST', 'GET'])
 def output():
+    
     return render_template("output.html", result=None)
+
 
 
 if __name__ == '__main__':
