@@ -1,7 +1,0 @@
-class Dataset:
-      def __init__(self):
-      	  self.x_train
-	  self.y_train
-	  self.y_*
-	  self.max_len
-	  
