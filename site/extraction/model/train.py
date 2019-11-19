@@ -29,7 +29,7 @@ class ModelTrainer:
                +-- Model.json       -> Definition of the model
                +-- Vocabulary.json  -> Mapping of the words used in the model to numerical values 
         """
-        save_dir = "models/" + model_info.group + "/" + model_info.name + "/"
+        save_dir = "extraction/model/models/" + model_info.group + "/" + model_info.name + "/"
         print("saving to " + save_dir)
 
         if not os.path.exists(save_dir):
@@ -40,13 +40,21 @@ class ModelTrainer:
             json_file.write(model_json)
         trained_model.save_weights(save_dir + "ModelWeights.h5")
 
-        vocab_json = json.dumps(dataset.vocabulary)
-        tags       = json.dumps(dataset.tags)
+        vocab_list = []
+        for word,index in dataset.vocabulary.items():
+            dict_item = {}
+            dict_item["word"] = word
+            dict_item["index"] = index
+            vocab_list.append(dict_item)
+
+        vocab_json = json.dumps(vocab_list)
+
+        tags = json.dumps({"categories": list(dataset.tags.keys())})
 
         with open(save_dir+"Vocabulary.json", "w") as vocab_file:
             vocab_file.write(vocab_json)
 
-        with open(save_dir+"Tags.json", "w") as tags_file:
+        with open(save_dir+"Categories.json", "w") as tags_file:
             tags_file.write(tags)
         
         
