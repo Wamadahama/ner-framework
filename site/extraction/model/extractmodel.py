@@ -7,7 +7,7 @@ from ..util.file import read_json
 
 class ExtractionModel:
     """Loads existing models and provides methods like predict to use them"""
-    def __init__(self, model_name=None, algorithm="bi-lstm", models_path="extraction/model/models/"):
+    def __init__(self, model_group=None, model_name=None, models_path="extraction/model/models/"):
 
         if model_name == None or model_name == "":
             self.model_name = model_name
@@ -15,11 +15,10 @@ class ExtractionModel:
         else:
             self.model_name = model_name
             self.models_path = models_path
-            self.load_pretrained_model(model_name)
+            self.model_group = model_group
+            self.load_pretrained_model(model_group, model_name)
 
-        self.algorithm  = algorithm
-
-    def load_pretrained_model(self, model_name=None):
+    def load_pretrained_model(self, model_group=None, model_name=None):
         """
         Loads a pre trained model from the models/ directory 
         The models/ directory has the following strcuture
@@ -39,13 +38,19 @@ class ExtractionModel:
         # load the model architecture 
         if self.model_name == None:
             self.model_name = model_name
+
+        if self.model_group == None:
+            self.model_group = model_group
         
-        model_files = read_model_files(self.models_path + self.model_name)
+        model_files = read_model_files(self.models_path + self.model_group + "/" + self.model_name)
 
         # Read the vocabulary, 
         vocab_file = [file for file in model_files if "Vocabulary.json" in file][0]
         # TODO: optimize this down to one call
-        self.vocabulary = read_json(vocab_file, output='pairs-list')
+        try:
+            self.vocabulary = read_json(vocab_file, output='pairs-list')
+        except:
+            self.vocabulary = read_json(vocab_file, output='dict')
         self.vocabulary_with_index = read_json(vocab_file, output='dict')
 
         #if "ENDPAD" not in self.vocabulary:
