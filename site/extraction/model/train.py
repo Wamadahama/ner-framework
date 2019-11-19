@@ -1,41 +1,47 @@
+import numpy as np
+import os 
+import json
 class ModelTrainer:
     """Class for training a NER model"""
     def __init__(self, model=None, dataset=None):
         self.model = model
         self.dataset = dataset 
 
-    def train(model, dataset):
+    def train(self,model, dataset):
         try:
             # Get the layers of the model and then train 
-            sentences = dataset.getStentences()
-            X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = dataset.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
             model_layout = model.get_model()
-            model_layout.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-            model_layout.fit(X_TRAIN, Y_TRAIN, validation_split=0.1,
+
+            model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+            model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
                              batch_size=model.batch_size, epochs=model.epochs)
             self.save_model(model, model_layout, dataset) # store the trained model to disk 
             return model_layout
-        except:
+        except Exception as e:
+            print(e)
             print("Unable to train model")
 
-    def train(): # overload 
-        train(self.model, self.dataset)
 
-    def save_model(model_info, trained_model, dataset):
+    def save_model(self, model_info, trained_model, dataset):
         """ 
         Need to save the following files 
                +-- ModelWeights.h5  -> Weights of the trained model  
                +-- Model.json       -> Definition of the model
                +-- Vocabulary.json  -> Mapping of the words used in the model to numerical values 
         """
-        save_dir = "models/" + model_info.name + "/"
-        model_json = model.to_json()
+        save_dir = "models/" + model_info.group + "/" + model_info.name + "/"
+        print("saving to " + save_dir)
+
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        model_json = trained_model.to_json()
         with open(save_dir+"Model.json", "w") as json_file:
             json_file.write(model_json)
         trained_model.save_weights(save_dir + "ModelWeights.h5")
 
-        vocab_json = to_vocab_json(dataset.vocabulary)
-        tags       = to_tags_json(dataset.tags)
+        vocab_json = json.dumps(dataset.vocabulary)
+        tags       = json.dumps(dataset.tags)
 
         with open(save_dir+"Vocabulary.json", "w") as vocab_file:
             vocab_file.write(vocab_json)

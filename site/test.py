@@ -1,6 +1,7 @@
 from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler 
 from extraction.model.model import Model, BiLstm
+from extraction.model.train import ModelTrainer 
 
 
 def main():
@@ -13,7 +14,9 @@ def main():
 
     loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
     dataset = loader.get_dataset()
-    training_model = BiLstm("re3d1", "re3d", dataset, (0,0), 512, 0.1, 0.1, 70, 30, 100).get_model()
+    training_model = BiLstm("re3d1", "re3d", dataset, (0,0), 512, 0.1, 0.1, 70, 500, 1)
+    trainer = ModelTrainer()
+    trainer.train(training_model, dataset) 
     #model = ExtractionModel("movie")
 #    model.extract("Ryan Gosling in the movie Drive where the driver finds himself entagled in a crime syndicate")
     #dt = model.extract('Blade Runner is a 1982 science fiction film directed by Ridley Scott This film is set in a dystopian future Lost Angeles of 2019') 
