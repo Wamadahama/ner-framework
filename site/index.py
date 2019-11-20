@@ -98,8 +98,12 @@ def input():
 
 @app.route("/output", methods=['POST', 'GET'])
 def output():
-    
-    return render_template("output.html", result=None)
+    if request.method == 'POST':
+        results = request.form['input-text']
+        input_text = str(results)
+        return render_template("output.html", input_text=input_text)
+    elif request.method == 'GET':
+        return render_template("output.html", input_text=None)
 
 
 if __name__ == '__main__':
