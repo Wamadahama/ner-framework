@@ -3,7 +3,7 @@ from nltk.corpus.reader import *
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.preprocessing.sequence import pad_sequences 
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 
 class DataHandler:
@@ -60,8 +60,6 @@ class DataHandler:
 
             X.append(padded_sent)
             padded_sent = []
-        #print (len(X[53]))
-        ##print(X[53])
         new_sentences = X
 
         words = []
@@ -74,10 +72,8 @@ class DataHandler:
 
         words2index = { w: i for i,w in enumerate(unique_words) }
         X = [[words2index[w] for w in s] for s in X]
+        self.dictionary = words2index
 
-        self.vocabulary = words2index
-
-        #print(sentences)
         tags = []
         for s in sentences:
             for w in s:
@@ -87,32 +83,30 @@ class DataHandler:
         self.n_tags = num_tags
 
         tags2index = { t: i for i,t in enumerate(tags) }
-        self.tags = tags2index 
-        #print("")
-        #print(tags)
-        #print("")
         y = [[tags2index[w[1]] for w in s] for s in sentences]
         y = pad_sequences(maxlen=max_len, sequences=y, padding="post", value=tags2index["O"])
         y = [to_categorical(i, num_classes=num_tags) for i in y]
+        self.categories = tags
 
         X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = train_test_split(X,y, test_size=test_size)
         return X_TRAIN, X_TEST, Y_TRAIN, Y_TEST
 
 
     def get_dataset(self):
-        sentences = self.getSentences() 
+        sentences = self.getSentences()
         max_len = max([len(sentence) for sentence in sentences])
         X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = self.get_train_test(sentences=sentences, test_size=0.1, max_len=max_len)
-        return Dataset(X_TRAIN, X_TEST, Y_TRAIN, Y_TEST, max_len, self.n_words, self.n_tags, self.vocabulary, self.tags)
-    
+        return Dataset(X_TRAIN, X_TEST, Y_TRAIN, Y_TEST, max_len, self.n_words, self.n_tags, self.dictionary, self.categories, )
+
 
 class Dataset:
-    def __init__(self, x_train, x_test, y_train, y_test, max_len, n_words, n_tags, vocabulary, tags):
-        self.x_train    = x_train
-        self.x_test     = x_test
-        self.y_train    = y_train
-        self.max_len    = max_len
-        self.n_words    = n_words 
-        self.n_tags     = n_tags
-        self.vocabulary = vocabulary
-        self.tags       = tags 
+    def __init__(self, x_train, x_test, y_train, y_test, max_len, n_words, n_tags, dictionary, categories):
+        self.x_train = x_train
+        self.x_test  = x_test
+        self.y_train = y_train
+        self.y_test = y_test
+        self.max_len = max_len
+        self.n_words = n_words
+        self.n_tags  = n_tags
+        self.dictionary = dictionary
+        self.categories = categories

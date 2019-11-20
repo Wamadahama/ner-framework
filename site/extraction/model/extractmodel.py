@@ -20,31 +20,35 @@ class ExtractionModel:
 
     def load_pretrained_model(self, model_group=None, model_name=None):
         """
-        Loads a pre trained model from the models/ directory 
+        Loads a pre trained model from the models/ directory
         The models/ directory has the following strcuture
 
-           
+
            models/
            +-- model1/
-               /Dataset/            -> Raw tagged dataset used to train the model's weights 
-               +-- ModelWeights.h5  -> Weights of the trained model  
+               /Dataset/            -> Raw tagged dataset used to train the model's weights
+               +-- ModelWeights.h5  -> Weights of the trained model
                +-- Model.json       -> Definition of the model
-               +-- Vocabulary.json  -> Mapping of the words used in the model to numerical values 
+               +-- Vocabulary.json  -> Mapping of the words used in the model to numerical values
 
            ...
-           +-- modelN/ 
+           +-- modelN/
         """
 
-        # load the model architecture 
+        # load the model architecture
         if self.model_name == None:
             self.model_name = model_name
 
+<<<<<<< Updated upstream
         if self.model_group == None:
             self.model_group = model_group
         
         model_files = read_model_files(self.models_path + self.model_group + "/" + self.model_name)
+=======
+        model_files = read_model_files(self.models_path + self.model_name)
+>>>>>>> Stashed changes
 
-        # Read the vocabulary, 
+        # Read the vocabulary,
         vocab_file = [file for file in model_files if "Vocabulary.json" in file][0]
         # TODO: optimize this down to one call
         try:
@@ -66,16 +70,16 @@ class ExtractionModel:
         print("Attempting to load model {}".format(model_file))
 
         try:
-            self.model_file = model_file 
+            self.model_file = model_file
             self.Model = model_from_json(read_json(model_file, output='json'))
             self.Model.load_weights([file for file in model_files if "ModelWeights.h5" in file][0])
             print("Done loading model")
         except:
             print("Unable to load model")
             return
-        
 
-        
+
+
 
     #TODO: deal with punctuation (better split)
     def extract(self, text):
@@ -88,7 +92,7 @@ class ExtractionModel:
             if i >= len(text):
                 text.append("xxxPADDINGxxx")
 
-        # words to numbers 
+        # words to numbers
         input_vector = []
         for word in text:
             if word in self.vocabulary:
@@ -103,7 +107,7 @@ class ExtractionModel:
 
         #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
-        for w,pred in zip(input_vector, prediction[0]): 
+        for w,pred in zip(input_vector, prediction[0]):
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
                     word = pair['word']
@@ -112,4 +116,3 @@ class ExtractionModel:
                     category = self.categories[pred]
                     return_dict[word] = category
         return return_dict
-
