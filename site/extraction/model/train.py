@@ -16,20 +16,7 @@ class ModelTrainer:
             model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
                              batch_size=model.batch_size, epochs=model.epochs)
 
-            # self.save_model(model, model_layout, dataset) # store the trained model to disk
-            save_dir = "extraction/model/models/" + model.group + "/" + model.name + "/"
-            print("saving to " + save_dir)
-
-            if not os.path.exists(save_dir):
-                os.makedirs(save_dir)
-
-
-
-            model_json = model_layout.to_json()
-            with open(save_dir+"Model.json", "w") as json_file:
-                json_file.write(model_json)
-            model_layout.save_weights(save_dir + "ModelWeights.h5")
-
+            self.save_model(model, model_layout, dataset) # store the trained model to disk
 
             return model_layout
         except Exception as e:
