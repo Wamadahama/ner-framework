@@ -71,7 +71,19 @@ models = c.fetchall()
 
 @app.route("/")
 def index():
+
+# example select
+#    cur = g.db.execute('Select * from Corpus')
+#    rows = cur.fetchall()
+# example insert
+#    cur = g.db.execute('Insert Into Corpus (EntityType, RawText) Values (1, "Test Text")')
+#    g.db.commit()
+
+    cur = g.db.execute('Select * from Model')
+    rows = cur.fetchall()
+    return render_template("index.html", models=rows)
     return render_template("index.html", models=models)
+
 
 
 @app.route("/input", methods=['POST', 'GET'])
@@ -90,6 +102,6 @@ def output():
     return render_template("output.html", result=None)
 
 
-
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8000)
+
