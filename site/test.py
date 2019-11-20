@@ -1,4 +1,4 @@
-# from extraction.model.extractmodel import ExtractionModel
+from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
 from extraction.model.model import Model, BiLstm
 from extraction.model.train import ModelTrainer
@@ -19,7 +19,7 @@ def main():
    # trainer = ModelTrainer()
    # trainer.train(training_model, dataset)
 
-    # model = ExtractionModel("re3d", "re3d1")
+    model = ExtractionModel("movie", "movie1")
     # dt = model.extract("Us Marines")
     # print(dt)
 #    dt = model.extract("Ryan Gosling in the movie Drive where the driver finds himself entagled in a crime syndicate")
@@ -31,11 +31,34 @@ def main():
 
 
 
-    loader  = DataHandler('../nlp-model/dataset/MITMovie_dataset.csv')
-    dataset = loader.get_dataset()
+    #loader  = DataHandler('../nlp-model/dataset/MITMovie_dataset.csv')
+    #dataset = loader.get_dataset()
+    
+# O	what
+# O	is
+# O	the
+# B-Genre	italian
+# I-Genre	language
+# O	film
+# O	by
+# B-Director	frederico
+# I-Director	fellini
+# O	that
+# B-Plot	focuses
+# I-Plot	on
+# I-Plot	a
+# I-Plot	photographer
+# I-Plot	and
+# I-Plot	the
+# I-Plot	decadence
+# I-Plot	of
+# I-Plot	modern
+# I-Plot	life
 
+    i = model.extract("what is the italian language film by frederico fellini that focuses on a photographer and the decadence of modern life")
+    print(i)
     # name, group, dataset, input_shape, lstm_units, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs
-
+'''
     training_model = BiLstm("movie1", "movie", dataset, (0,0), 512, 0.1, 0.1, 50, 32, 2)
     trainer = ModelTrainer()
     trainer.train(training_model, dataset)
@@ -48,6 +71,6 @@ def main():
     best_model = CrossValidator(dataset, 'movie', ['movie1', 'movie2']).compare()
     print(best_model, " was determined to be the best model")
     # best_model = crossvaldation(model1, model2) #where model1 and model2 are instances of 'model class'
-
+'''
 
 main()

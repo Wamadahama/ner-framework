@@ -3,6 +3,14 @@ import sqlite3
 import os
 import hashlib
 
+'''
+from extraction.model.extractmodel import ExtractionModel
+from extraction.model.dataset import DataHandler
+from extraction.model.model import Model, BiLstm
+from extraction.model.train import ModelTrainer
+from extraction.model.crossvalidation import CrossValidator
+'''
+
 from flask import Flask, request, session, g, redirect, url_for, \
     abort, render_template, flash, Markup, session
 
@@ -66,6 +74,10 @@ c.execute('SELECT {cn} FROM {tn}'.\
           format(tn='model', cn='ModelName'))
 models = c.fetchall()
 
+c.execute('SELECT {cn} FROM {tn}'.\
+          format(tn='model', cn='ModelDescription'))
+modelDesc = c.fetchall()
+
 # App routes
 
 
@@ -81,8 +93,7 @@ def index():
 
     cur = g.db.execute('Select * from Model')
     rows = cur.fetchall()
-    return render_template("index.html", models=rows)
-    return render_template("index.html", models=models)
+    return render_template("index.html", models=models, modelDesc=modelDesc)
 
 
 
@@ -100,8 +111,11 @@ def input():
 def output():
     if request.method == 'POST':
         results = request.form['input-text']
+        #model = ExtractionModel("movie","movie1")
         input_text = str(results)
-        return render_template("output.html", input_text=input_text)
+        #i = model.extract(input_text)
+        i = "potato"
+        return render_template("output.html", input_text=i)
     elif request.method == 'GET':
         return render_template("output.html", input_text=None)
 

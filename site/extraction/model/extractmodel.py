@@ -39,14 +39,10 @@ class ExtractionModel:
         if self.model_name == None:
             self.model_name = model_name
 
-<<<<<<< Updated upstream
         if self.model_group == None:
             self.model_group = model_group
         
         model_files = read_model_files(self.models_path + self.model_group + "/" + self.model_name)
-=======
-        model_files = read_model_files(self.models_path + self.model_name)
->>>>>>> Stashed changes
 
         # Read the vocabulary,
         vocab_file = [file for file in model_files if "Vocabulary.json" in file][0]
