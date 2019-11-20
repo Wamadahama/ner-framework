@@ -71,13 +71,23 @@ c = conn.cursor()
 
 
 c.execute('SELECT {cn} FROM {tn}'.\
-          format(tn='model', cn='ModelName'))
+          format(tn='model', cn='ModelName,id'))
 models = c.fetchall()
 
 c.execute('SELECT {cn} FROM {tn}'.\
           format(tn='model', cn='ModelDescription'))
 modelDesc = c.fetchall()
 
+c.execute('SELECT {cn} FROM {tn}'.\
+          format(tn='model', cn='id,ModelName'))
+modelID = c.fetchall()
+
+# SQL Grab Cell
+
+def grab(row):
+    cur = c.cursor()
+    cur.execute("SELECT GroupName, BackendName FROM Model WHERE id = row"(row,))
+    return cur.fetchall()
 # App routes
 
 
@@ -93,7 +103,7 @@ def index():
 
     cur = g.db.execute('Select * from Model')
     rows = cur.fetchall()
-    return render_template("index.html", models=models, modelDesc=modelDesc)
+    return render_template("index.html", models=models, modelDesc=modelDesc, modelID=modelID)
 
 
 
@@ -111,10 +121,15 @@ def input():
 def output():
     if request.method == 'POST':
         results = request.form['input-text']
-        #model = ExtractionModel("movie","movie1")
-        input_text = str(results)
+        row = session['selected_model']
+        cur = g.db.execute("SELECT GroupName, BackendName FROM Model WHERE id = " + row)
+        print(cur.fetchall())
+    #return cur.fetchall()
+        #t = grab(session['selected_model'])
+        #print(t)
+        # model = ExtractionModel(grab(request.form.get("model-select"))[0],request.form.get("model-select"))[1])
+        #input_text = str(results)
         #i = model.extract(input_text)
-        i = "potato"
         return render_template("output.html", input_text=i)
     elif request.method == 'GET':
         return render_template("output.html", input_text=None)

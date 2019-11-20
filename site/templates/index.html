@@ -5,8 +5,11 @@
 	    <div class="row justify-content-md-center justify-content-lg-center">
 			<div class="col-lg-10">
 				<div class="model-description pad-down">
+
 					<h4>Model Description</h4>
-					{{modelDesc[0]}}
+					
+					
+
 				</div>
 				<div class="pad-to-center">
 					<h4>Select model</h4>
@@ -15,9 +18,10 @@
 						<div class="input-group">
 							<select id="model-select" name="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
 							<option value="1">Select a model</option>
-
+            
 								{% for model in models %}
-									<option value="{{ model[0] }}">{{ model[0] }}</option>
+									<option value="{{ model[1] }}">{{ model[0] }}</option>
+									
 								{% endfor %}
 
 							</select>
@@ -25,10 +29,14 @@
 						</div>
 					</form>
 					
-					<script>
-
+					<script type='text/javascript'>
+						function updateSelectedModel(value){
+							
+							console.log(value)
+							
+						}
 					</script>
-					
+
 				</div>
 			</div>
 	    </div>
