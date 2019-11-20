@@ -32,12 +32,12 @@ create table Categorization (
        Certainty integer NOT NULL 
 );
 
-create table Model(
+create table Model (
        id integer primary key autoincrement,
        ModelName text,
        ModelDescription text,
        Observations int
-)
+);
 
 -- web page tables 
 -- might need to add more tables that would drive the website 

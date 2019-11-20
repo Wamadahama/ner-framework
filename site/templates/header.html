@@ -9,8 +9,11 @@
 
 	<title>Prototype</title>
 
-	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link href="static/bootstrap.min.css" rel="stylesheet">
+		<script src="{{ url_for('static', filename='jquery-3.2.1.slim.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+
 	<!-- Custom styles for this template -->
 	<link href="" rel="stylesheet">
 	<style>
@@ -49,21 +52,21 @@
 			    <a class="nav-link big-link">NLP4NM</strong>&nbsp; |</a>
 			    <div class="vertical-line"></div>
 			</li>
-			<li class="nav-item small-link">
-			    <a class="nav-link" href="index.html">Select model <span class="sr-only">(current)</span></a>
+			<li {% if request.path == '/' %} class="active"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/">Select model <span class="sr-only">(current)</span></a>
 			</li>
 			<li>&nbsp;</li>
-			<li class="nav-item small-link active">
-			    <a class="nav-link" href="input.html">Input message</a>
+			<li {% if request.path == '/input' %} class="active"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/input">Input message</a>
 			</li>
-			<li class="nav-item small-link">
-			    <a class="nav-link" href="">Results</a>
+			<li {% if request.path == '/output' %} class="active"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/output">Results</a>
 			</li>
 		    </ul>
 
 		    <ul class="navbar-nav ml-auto">
 			<li class="nav-item">
-			    <strong>Selected model: </strong> re3d model
+			    <strong>Selected model: </strong> <p id='selectedModel'>{{ session['selected_model']}}</p>
 			</li>
 		    </ul>
 		</div>
