@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import json
+
 class ModelTrainer:
     """Class for training a NER model"""
     def __init__(self, model=None, dataset=None):

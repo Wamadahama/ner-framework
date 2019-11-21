@@ -1,14 +1,9 @@
 {% extends "header.html" %}
 
 {% block body %}
-
-
-	<!--Selected Model: {{ selected }}-->	
-
     <div class="col-lg-8">
         <div class="pad-to-center">
             <h4>Enter raw text</h4>
-
             <form action="/output" method="POST">
                 <div class="input-group grp">
                     <textarea rows="4" cols="80" name='input-text'></textarea>
@@ -18,7 +13,6 @@
                     <input type="submit" class="btn btn-primary btn-lg btn-block float-right">
                 </div>
             </form>
-
         </div>
     </div>
 {% endblock %}

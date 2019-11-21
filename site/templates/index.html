@@ -1,46 +1,55 @@
 {% extends "header.html" %}
 {% block body %}
-		<!--Body-->
+<!--Body-->
 
-	    <div class="row justify-content-md-center justify-content-lg-center">
-			<div class="col-lg-10">
-				<div class="model-description pad-down">
+<div class="row justify-content-md-center justify-content-lg-center">
+    <div class="col-lg-10">
 
-					<h4>Model Description</h4>
-					
-					
+	<div id="description" class="model-description pad-down">
+	    <h4>Model Description</h4>
+	    <p class="lead" id="model-description"></p>
+	</div>
 
-				</div>
-				<div class="pad-to-center">
-					<h4>Select model</h4>
+	<div class="pad-to-center">
 
-					<form action="/input" method = "POST">
-						<div class="input-group">
-							<select id="model-select" name="model-select" class="custom-select" onChange="updateSelectedModel(this.value)">
-							<option value="1">Select a model</option>
-            
-								{% for model in models %}
+	    <h4>Select model</h4>
 
-									<option value="{{ model[1] }}">{{ model[0] }}</option>
-									
-								{% endfor %}
+	    <form action="/select-model" method = "POST">
+		<div class="input-group">
+		    <select id="model-select" name="model-select" class="custom-select" onChange="load_description(this.value)">
+			<option value="0">Select a model</option>
+			{% for model in models %}
+			<option value="{{ model[0] }}">{{ model[1] }}</option>
+			{% endfor %}
+		    </select>
+		    <input type="submit" value="Select model">
+		</div>
+	    </form>
+	    
 
-							</select>
-							<input type="submit" value="Select model">
-						</div>
-					</form>
-					
-					<script type='text/javascript'>
-						function updateSelectedModel(value){
-							
-							console.log(value)
-						
-						}
-					</script>
+	</div>
+    </div>
+</div>
 
-				</div>
-			</div>
-	    </div>
-
+	    <script type='text/javascript'>
+	     $(document).ready(function() {
+		 $("#description").hide()
+	     });
+	     function load_description(model_id){
+		 if(model_id == 0) {
+		     $("#description").hide()
+		 } else {
+		     $("#description").show()
+		     $.ajax({
+			 type: 'GET',
+			 url: "model/" + model_id,
+			 success: function (model) {	
+			     let description = JSON.parse(model).description;
+			     $('#model-description').text(description)
+			 }
+		     });
+		 }
+	     }
+	    </script>
 {% endblock %}
 

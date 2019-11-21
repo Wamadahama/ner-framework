@@ -1,7 +1,13 @@
 {% extends "header.html" %}
-
 {% block body %}
-
-    {{input_text}}
-
+<div class="col-lg-10">
+    <h4>Extraction results</h4>
+    <div class="input-group grp">
+	<p class="lead">
+	    {% for word in extraction %}
+	    {% endfor %}
+	</p>
+    </div>
+</div>
 {% endblock %}
+ 
