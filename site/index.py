@@ -3,13 +3,11 @@ import sqlite3
 import os
 import hashlib
 
-'''
 from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
 from extraction.model.model import Model, BiLstm
 from extraction.model.train import ModelTrainer
 from extraction.model.crossvalidation import CrossValidator
-'''
 
 from flask import Flask, request, session, g, redirect, url_for, \
     abort, render_template, flash, Markup, session
@@ -64,47 +62,48 @@ def not_found_error(e):
 def bad_code_error(e):
     return render_template('./response/500.html')
 
+
 # Set up sqlite database
 
 conn = sqlite3.connect('nlp4nm.db')
 c = conn.cursor()
 
-
-c.execute('SELECT {cn} FROM {tn}'.\
+c.execute('SELECT {cn} FROM {tn}'. \
           format(tn='model', cn='ModelName,id'))
 models = c.fetchall()
 
-c.execute('SELECT {cn} FROM {tn}'.\
+c.execute('SELECT {cn} FROM {tn}'. \
           format(tn='model', cn='ModelDescription'))
 modelDesc = c.fetchall()
 
-c.execute('SELECT {cn} FROM {tn}'.\
+c.execute('SELECT {cn} FROM {tn}'. \
           format(tn='model', cn='id,ModelName'))
 modelID = c.fetchall()
+
 
 # SQL Grab Cell
 
 def grab(row):
     cur = c.cursor()
-    cur.execute("SELECT GroupName, BackendName FROM Model WHERE id = row"(row,))
+    cur.execute("SELECT GroupName, BackendName FROM Model WHERE id = row"(row, ))
     return cur.fetchall()
+
+
 # App routes
 
 
 @app.route("/")
 def index():
-
-# example select
-#    cur = g.db.execute('Select * from Corpus')
-#    rows = cur.fetchall()
-# example insert
-#    cur = g.db.execute('Insert Into Corpus (EntityType, RawText) Values (1, "Test Text")')
-#    g.db.commit()
+    # example select
+    #    cur = g.db.execute('Select * from Corpus')
+    #    rows = cur.fetchall()
+    # example insert
+    #    cur = g.db.execute('Insert Into Corpus (EntityType, RawText) Values (1, "Test Text")')
+    #    g.db.commit()
 
     cur = g.db.execute('Select * from Model')
     rows = cur.fetchall()
-    return render_template("index.html", models=models, modelDesc=modelDesc, modelID=modelID)
-
+    return render_template("index.html", models=models, modelDesc=modelDesc)
 
 
 @app.route("/input", methods=['POST', 'GET'])
@@ -117,19 +116,21 @@ def input():
     elif request.method == 'GET':
         return render_template("input.html", result=None)
 
+
 @app.route("/output", methods=['POST', 'GET'])
 def output():
     if request.method == 'POST':
         results = request.form['input-text']
         row = session['selected_model']
         cur = g.db.execute("SELECT GroupName, BackendName FROM Model WHERE id = " + row)
-        print(cur.fetchall())
-    #return cur.fetchall()
-        #t = grab(session['selected_model'])
-        #print(t)
-        # model = ExtractionModel(grab(request.form.get("model-select"))[0],request.form.get("model-select"))[1])
-        #input_text = str(results)
-        #i = model.extract(input_text)
+        t = cur.fetchall()
+        # return cur.fetchall()
+        # t = grab(session['selected_model'])
+        # print(t)
+        print(t[0], t[1])
+        model = ExtractionModel(t[0], t[1])
+        # input_text = str(results)
+        # i = model.extract(input_text)
         return render_template("output.html", input_text=i)
     elif request.method == 'GET':
         return render_template("output.html", input_text=None)
@@ -137,4 +138,3 @@ def output():
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8000)
-

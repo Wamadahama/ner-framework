@@ -5,6 +5,8 @@
 
 # Folders
 /flask/.idea
+/venv
+/site/venv
 
 # Files
 .DS_Store
