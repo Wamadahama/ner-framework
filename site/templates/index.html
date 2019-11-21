@@ -20,6 +20,7 @@
 							<option value="1">Select a model</option>
             
 								{% for model in models %}
+
 									<option value="{{ model[1] }}">{{ model[0] }}</option>
 									
 								{% endfor %}
@@ -33,7 +34,7 @@
 						function updateSelectedModel(value){
 							
 							console.log(value)
-							
+						
 						}
 					</script>
 
