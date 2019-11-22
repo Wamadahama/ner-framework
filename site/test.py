@@ -2,27 +2,32 @@ from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
 from extraction.model.model import Model, BiLstm
 from extraction.model.train import ModelTrainer
-from extraction.model.crossvalidation import CrossValidator
-
+#from extraction.model.crossvalidation import CrossValidator
 
 def main():
-    # Test Model training:
+#   loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
+#   dataset = loader.get_dataset()
+#   training_model = BiLstm("re3d1", "re3d", dataset, (0,0), 512, 0.1, 0.1, 70, 200, 1)
+#   trainer = ModelTrainer()
+#   trainer.train(training_model, dataset)
 
-#from dataset import DataHandler
-    #d_set1 = DataHandler('../../../nlp-model/dataset/MITMovie_dataset.csv')
-    #sentences = d_set1.getSentences()
-    #X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = d_set1.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
+   movie_model = ExtractionModel("movie", "movie3")
+   dt = movie_model.extract("Ryan Gosling in the movie Drive where the driver finds himself entagled in a crime syndicate")
+   print(dt)
 
-   # loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
-   # dataset = loader.get_dataset()
-   # training_model = BiLstm("re3d1", "re3d", dataset, (0,0), 512, 0.1, 0.1, 70, 200, 1)
-   # trainer = ModelTrainer()
-   # trainer.train(training_model, dataset)
 
-    model = ExtractionModel("movie", "movie1")
-    # dt = model.extract("Us Marines")
-    # print(dt)
-#    dt = model.extract("Ryan Gosling in the movie Drive where the driver finds himself entagled in a crime syndicate")
+
+
+
+
+
+
+
+
+
+
+
+'''
 #    print(dt)
     #dt = model.extract('Blade Runner is a 1982 science fiction film directed by Ridley Scott This film is set in a dystopian future Lost Angeles of 2019')
     #print(dt)
@@ -58,7 +63,6 @@ def main():
     i = model.extract("what is the italian language film by frederico fellini that focuses on a photographer and the decadence of modern life")
     print(i)
     # name, group, dataset, input_shape, lstm_units, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs
-'''
     training_model = BiLstm("movie1", "movie", dataset, (0,0), 512, 0.1, 0.1, 50, 32, 2)
     trainer = ModelTrainer()
     trainer.train(training_model, dataset)
@@ -72,5 +76,4 @@ def main():
     print(best_model, " was determined to be the best model")
     # best_model = crossvaldation(model1, model2) #where model1 and model2 are instances of 'model class'
 '''
-
 main()

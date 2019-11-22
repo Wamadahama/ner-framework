@@ -83,6 +83,7 @@ def index():
     print(rows)
     return render_template("index.html", models=rows)
 
+
 @app.route("/model/<int:id>")
 def get_model(id):
     cur = g.db.execute("Select * from Model where id = '" + str(id) + "'")
@@ -112,10 +113,20 @@ def output():
         t = cur.fetchall()
         model = ExtractionModel(t[0][0], t[0][1])
         i = model.extract(results)
-        return render_template("output.html", input_text=i)
+        tags = get_category_colors(i.values())
+        new_dict={}
+        for key, value in i.items():
+            new_dict[key] = value.replace('B-', '').replace('I-', '')
+        color_set = ["#004c97", "#ff9e15#", "#a5cd50", "#2dbecd", "#e61e50"]
+        return render_template("output.html", extraction=new_dict, tags=tags, original_word_set=results.split(" "), color_set=color_set)
     elif request.method == 'GET':
         return render_template("output.html", input_text=None)
 
+
+def get_category_colors(tags):
+    color_set = ["#004c97", "#ff9e15#", "#a5cd50", "#2dbecd", "#e61e50"]
+    tags = [tag.replace('B-', '').replace('I-', '') for tag in tags]
+    return list(set(tags))
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8000)

@@ -74,9 +74,6 @@ class ExtractionModel:
             print("Unable to load model")
             return
 
-
-
-
     #TODO: deal with punctuation (better split)
     def extract(self, text):
         """ Given a text return the extractions. Uses the model loaded in the self.load_pretrianed_model """
@@ -99,7 +96,6 @@ class ExtractionModel:
         # perform extraction
         prediction = self.Model.predict(np.array([input_vector]))
         prediction = np.argmax(prediction, axis=-1)
-
 
         #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
