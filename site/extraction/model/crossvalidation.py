@@ -51,6 +51,21 @@ class CrossValidator:
             out.append(out_i)
         return out
 
+    # def script():
+    #     for layers in range(10) # this is inputSize:
+    #         layersSize = layers*10
+            # run LSTM with layersSize
+            # save f1 score in arr1
+            # if the next 2 f1 score is decreasing, stop
+            # findMax(arr1) = [a,b,c,d,max,e,f,g]
+            # compare the d and the e, and if e> d => layersSize is between max and e.
+            # repeat this between layersSize of max and e
+            # stop as soon as 2 of the f1 decrease
+        # let inputSize = N
+        #  For this one, you run the model N/10 + 10
+        # for the k-fold, you run it k times
+        # so in total it is k(N/10 + 10)
+
     def compare(self):
 
         f_scores = []
