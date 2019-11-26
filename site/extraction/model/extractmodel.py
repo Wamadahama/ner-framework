@@ -97,6 +97,8 @@ class ExtractionModel:
         prediction = self.Model.predict(np.array([input_vector]))
         prediction = np.argmax(prediction, axis=-1)
 
+        print(text)
+
         #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
         for w,pred in zip(input_vector, prediction[0]):

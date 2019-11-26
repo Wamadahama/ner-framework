@@ -9,20 +9,20 @@ class ModelTrainer:
         self.dataset = dataset
 
     def train(self,model, dataset):
-        try:
+#        try:
             # Get the layers of the model and then train
-            model_layout = model.get_model()
+        model_layout = model.get_model()
 
-            model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-            model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
-                             batch_size=model.batch_size, epochs=model.epochs)
+        model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+        model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
+                            batch_size=model.batch_size, epochs=model.epochs)
 
-            self.save_model(model, model_layout, dataset) # store the trained model to disk
+        self.save_model(model, model_layout, dataset) # store the trained model to disk
 
-            return model_layout
-        except Exception as e:
-            print(e)
-            print("Unable to train model")
+        return model_layout
+#        except Exception as e:
+#            print(e)
+#            print("Unable to train model")
 
 
     def save_model(self, model_info, trained_model, dataset):

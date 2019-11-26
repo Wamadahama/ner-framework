@@ -27,7 +27,7 @@ class BiLstm(BaseModel):
         try:
             input = Input(shape=(self.dataset.max_len,))
             embedding = Embedding(input_dim=self.dataset.n_words, output_dim = self.embedding_output_dimensions, input_length = self.dataset.max_len)(input)
-            lstm_layer = Bidirectional(LSTM(units=self.lstm_units, return_sequences=True,
+            lstm_layer = Bidirectional(Lstm(units=self.lstm_units, return_sequences=True,
                                             recurrent_dropout=self.recurrent_dropout,
                                             dropout=self.dropout))(embedding)
             output_layer = TimeDistributed(Dense(self.dataset.n_tags, activation='softmax'))(lstm_layer)
@@ -43,7 +43,7 @@ class BiLstm2(BaseModel):
         """ all information required for training """
         super().__init__(name, group, dataset, input_shape)
         self.lstm_units1 = lstm_units1 # todo: write a method for determining units by default
-        self.lstm_units2 = lstm_units2 # todo: write a method for determining units by default
+        self.lstm_units1 = lstm_units2 # todo: write a method for determining units by default
         self.dropout = dropout # dropout layer 
         self.recurrent_dropout = recurrent_dropout # lstm recurrent dropout 
         self.embedding_output_dimensions = embedding_output_dimensions # first embedding layer 
@@ -53,17 +53,17 @@ class BiLstm2(BaseModel):
         self.epochs = epochs 
 
     def get_model(self):
-        input = Input(shape=(self.dataset.max_len,))
-        embedding = Embedding(input_dim=self.dataset.n_words, output_dim = self.embedding_output_dimensions, input_length = self.dataset.max_len)(input)
-        lstm_layer = Bidirectional(LSTM(units=self.lstm_units1, return_sequences=True,
-                                        recurrent_dropout=self.recurrent_dropout,
-                                        dropout=self.dropout))(embedding)
-        lstm_layer2 = Bidirectional(LSTM(units=self.lstm_units2, return_sequences=False,
-                                         recurrent_dropout=self.recurrent_dropout,
-                                         dropout=self.dropout))(lstm_layer)
-        output_layer = TimeDistributed(Dense(self.dataset.n_tags, activation='softmax'))(lstm_layer2)
-        model = Model(input, output_layer)
-        return model
-        #except Exception as e:
-        #    print("unable to compile model") # more descriptive errors 
-        #    print(e)
+        try:
+            input = input(shape=(self.dataset.max_len,))
+            embedding = embedding(input_dim=self.dataset.n_words, output_dim = self.embedding_output_dimensions, input_length = self.dataset.max_len)(input)
+            lstm_layer = Bidirectional(Lstm(units=self.lstm_units, return_sequences=false,
+                                            recurrent_dropout=self.recurrent_dropout,
+                                            dropout=self.dropout))(embedding)
+            lstm_layer2 = Bidirectional(Lstm(units=self.lstm_units, return_sequences=true,
+                                            recurrent_dropout=self.recurrent_dropout,
+                                            dropout=self.dropout))(embedding)
+            output_layer = TimeDistributed(dense(self.dataset.n_tags, activation='softmax'))(lstm_layer)
+            model = model(input, output_layer)
+            return model
+            print("unable to compile model") # more descriptive errors 
+            print(e)
