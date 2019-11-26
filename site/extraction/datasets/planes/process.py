@@ -1,8 +1,14 @@
 import random
+
 import pandas as pd 
+import numpy as np
 
 df = pd.read_csv('THOR_WWI_CLEAN_NEW_12072016.csv', encoding='cp1252')
 print(df.columns)
+
+def p(item):
+    print(item)
+    exit()
 
 
 tag_names = [
@@ -29,7 +35,10 @@ tag_names = [
      "I-MDS",],
 
      ["O-NUMBEROFPLANESATTACKING",
-      "I-NUMBEROFPLANESATTACKING"]
+      "I-NUMBEROFPLANESATTACKING"],
+
+   # ["O-ENEMYACTION",
+   #  "I-ENEMYACTION"]
 #    "O"
 ]
 
@@ -42,7 +51,8 @@ tag_wrappers = [
     ["dt: {}", "date {} ", "on {} "],
     ["desig: {} ", "{} "],
     ["pc: {}", "qty: {} "],
-#    [""]
+   # ["{}"]
+   # [""]
 ]
 
 df = df.dropna(axis=0, subset=[tag[0].replace("O-", "") for tag in tag_names])
@@ -52,42 +62,41 @@ df = df.dropna(axis=0, subset=[tag[0].replace("O-", "") for tag in tag_names])
 
 messages = []
 for i in df.index:
-    # pick 6 tags and create the tag
     tags = set(random.choices(range(0, len(tag_names)), k=8))
     message = []
     for tag in tags:
-        counter = 0
         wrapper = random.choice(tag_wrappers[tag])
-        itr = wrapper.split(" ")
+        piece = df[tag_names[tag][0].replace("O-", "")][i]
+        string = wrapper.format(piece).lower()
+        
+        itr = string.split(" ")
         itr = itr[:-1]
+        counter = 0
+
         xtr = []
         for word in itr: 
             l = []
             if counter == 0:
-                piece = df[tag_names[tag][0].replace("O-", "")][i]
-                #print(piece.split(" "))
-                #print(len(piece.strip().split(" ")))
-                if(len(str(piece).strip().split(" ")) <= 1):
-                    xtr.append([word.format(str(piece).lstrip().replace(",", "")), tag_names[tag][0]])
-                else:
-                    l = [ [w, tag_names[tag][0]] for w in piece.split(" ")]
-                    #print(itr)
-                    xtr += l
+                xtr.append([word.format(str(string).strip().replace(",", "")), tag_names[tag][0]])
+                counter +=1 
             else:
-                piece = df[tag_names[tag][1].replace("I-", "")][i]
-                if(len(str(piece).strip().split(" ")) <= 1):
-                    xtr.append([word.format(str(piece).lstrip().replace(",", "")), tag_names[tag][1]])
-                else:
-                    l = [ [w, tag_names[tag][1]] for w in piece.split(" ")]
-                    xtr += l
-            counter+= 1
-            message.append(xtr)
+                xtr.append([word.format(str(string).strip().replace(",", "")), tag_names[tag][1]])
+        message.append(xtr)
+            #else:
+            #    piece = df[tag_names[tag][1].replace("I-", "")][i]
+            #    if(len(str(piece).strip().split(" ")) <= 1):
+            #        xtr.append([word.format(str(piece).lstrip().replace(",", "")), tag_names[tag][1]])
+            #    else:
+            #        word_list = piece.split(" ")
+            #        xtr += [[word_list[0], tag_names[tag][0]]]
+            #        l = [ [w, tag_names[tag][1]] for w in piece.split(" ")[1::]]
+            #        xtr += l
+            #counter+= 1
     messages.append(message)
 
 #print("\n".join(messages))
 #messages=messages[::-2]
-
-
+#print(messages[1:3])
 with open('ww1_planes.csv', 'w') as f:
     for msg in messages:
         for part in msg:
