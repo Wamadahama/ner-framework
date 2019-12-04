@@ -18,13 +18,13 @@ def main():
     #sentences = d_set1.getSentences()
     #X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = d_set1.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
 
-    loader  = DataHandler("extraction/datasets/MITMovie_dataset.csv")
+    loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
     dataset = loader.get_dataset()
 
                             #rest is always fixed
-    optimalModel = Optimizer(dataset, initialUnits = 224, initialEpochs = 6).getOptimizedModel()
+    optimalModel = Optimizer(dataset, modelgroup="re3d", initialUnits = 128, initialEpochs = 1).getOptimizedModel() #TODO: modelname and modelGroup should be dynamic
 
-
+# Training with units: 352 epochs: 11
 
 
     # num_units = 256
@@ -64,18 +64,30 @@ def main():
 
 
 
-# units:76      f_score:  0.09864116758933064
-# units:256     f_score:  0.101530240466359
-# units:512     f_score:  0.10778164924506389
-# units:1024    f_score:  0.10430009149130832
-# units:2048    f_score:  0.060784313725490195
-# units:4096    f_score:  0.0
+####################################################
+###                    MOVIE                     ###
+###  Training with units: 160 epochs: 5          ###
+###  f_score:  0.5772357723577236                ###
+###                                              ###
+###  Training with units: 480 epochs: 9          ###
+###  f_score: 0.623  ->  movie_units7            ###
+###                                              ###
+###  Training with units: 768 epochs: 6          ###
+###  f_score:  0.6251036312386006                ###
+####################################################
 
-# Training with units: 768 epochs: 6
-# f_score:  0.6251036312386006
 
-# Training with units: 160 epochs: 5
-# f_score:  0.5772357723577236
+####################################################
+###                 WW1_PLANES                   ###
+###  Training with units: 416 epochs: 11         ###
+###  f_score:  0.7499999999999999                ###
+###  ww1_planes_units1                           ###
+###                                              ###
+###  Training with units: 480 epochs: 13         ###
+###  f_score:  0.9475806451612903                ###
+###  ww1_planes_units4                           ###
+####################################################
+
 
 
 

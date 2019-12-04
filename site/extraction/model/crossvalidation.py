@@ -69,7 +69,7 @@ class CrossValidator:
     def compare(self):
 
         f_scores = []
-        max_fscore = -666
+        max_fscore = 0
         max_index = -666
         for mn in self.model_names:
             folder_path = 'extraction/model/models/' + self.model_group + '/' + mn
@@ -123,5 +123,10 @@ class CrossValidator:
             if f_scores[i] > max_fscore:
                 max_fscore = f_scores[i]
                 max_index = i
+
+        #to change the epochs
+        #REMOVE this if statement when not crossvalidating thru optimizer
+        if max_fscore == 0.0:
+            max_index = 1
 
         return self.model_names[max_index]

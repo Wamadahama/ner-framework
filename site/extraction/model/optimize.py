@@ -13,15 +13,16 @@ import time
 
 
 class Optimizer:
-    def __init__(self, dataset, initialUnits, initialEpochs):
+    def __init__(self, dataset, modelgroup, initialUnits, initialEpochs):
         self.dataset = dataset
+        self.groupname = modelgroup
         self.num_units = initialUnits
         self.num_epochs = initialEpochs
 
     def thread_changeUnits(self, iter, dataset, num_units, num_epochs):
-        units_name = "movie_units"+str(iter)
+        units_name = self.groupname+"_units"+str(iter)
         num_units += 64
-        training_model1 = BiLstm(units_name, "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
+        training_model1 = BiLstm(units_name, self.groupname, dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
         # training_model1 = BiLstm_2layers(units_name, "movie", dataset, (0,0), 160, num_units, 0.1, 0.1, 100, 32, num_epochs)
         trainer = ModelTrainer()
         trained_model = trainer.train(training_model1, dataset)
@@ -29,9 +30,9 @@ class Optimizer:
         # return units_name
 
     def thread_changeEpochs(self, iter, dataset, num_units, num_epochs):
-        epochs_name = "movie_epochs"+str(iter)
+        epochs_name = self.groupname+"_epochs"+str(iter)
         num_epochs += 1
-        training_model2 = BiLstm(epochs_name, "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
+        training_model2 = BiLstm(epochs_name, self.groupname, dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
         # training_model2 = BiLstm_2layers(epochs_name, "movie", dataset, (0,0), 160, num_units, 0.1, 0.1, 100, 32, num_epochs)
         trainer = ModelTrainer()
         trained_model = trainer.train(training_model2, dataset)
@@ -50,10 +51,10 @@ class Optimizer:
             t2.join()
 
 
-            units_name = "movie_units"+str(iter)
-            epochs_name = "movie_epochs"+str(iter)
+            units_name = self.groupname+"_units"+str(iter)
+            epochs_name = self.groupname+"_epochs"+str(iter)
 
-            best_model = CrossValidator(self.dataset, "movie", [units_name, epochs_name]).compare()
+            best_model = CrossValidator(self.dataset, self.groupname, [units_name, epochs_name]).compare()
 
             if best_model == units_name:
                 self.num_units += 64
