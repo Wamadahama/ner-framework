@@ -18,11 +18,11 @@ def main():
     #sentences = d_set1.getSentences()
     #X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = d_set1.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
 
-    loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
+    loader  = DataHandler("extraction/datasets/food.csv")
     dataset = loader.get_dataset()
 
                             #rest is always fixed
-    optimalModel = Optimizer(dataset, modelgroup="re3d", initialUnits = 128, initialEpochs = 1).getOptimizedModel() #TODO: modelname and modelGroup should be dynamic
+    optimalModel = Optimizer(dataset, modelgroup="food", initialUnits = 224, initialEpochs = 6).getOptimizedModel() #TODO: modelname and modelGroup should be dynamic
 
 # Training with units: 352 epochs: 11
 
@@ -86,6 +86,18 @@ def main():
 ###  Training with units: 480 epochs: 13         ###
 ###  f_score:  0.9475806451612903                ###
 ###  ww1_planes_units4                           ###
+####################################################
+
+
+####################################################
+###                    FOOD                      ###
+###  Training with units: 288 epochs: 6          ###
+###  f_score:  0.695736434108527                 ###
+###  food_units1                                 ###
+###                                              ###
+###  Training with units: 224 epochs: 8          ###
+###  f_score:  0.7147876077930374                ###
+###  food_epochs2                                ###
 ####################################################
 
 
