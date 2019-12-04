@@ -1,9 +1,9 @@
 import random
 
-import pandas as pd 
+import pandas as pd
 import numpy as np
 
-df = pd.read_csv('THOR_WWI_CLEAN_NEW_12072016.csv', encoding='cp1252')
+df = pd.read_csv('thor_wwii_data_clean.csv', encoding='cp1252')
 print(df.columns)
 
 def p(item):
@@ -18,15 +18,15 @@ tag_names = [
 
     ["O-BOMBLOAD",
     "I-BOMBLOAD",],
-    
+
    ["O-DEPARTURE",
      "I-DEPARTURE",],
 
-    ["O-TGTLOCATION",
-     "I-TGTLOCATION",],
+    ["O-tgt_location",
+     "I-tgt_location",],
 
-    ["O-TGTTYPE",
-     "I-TGTTYPE",],
+    ["O-tgt_industry",
+     "I-tgt_industry",],
 
     ["O-MSNDATE",
      "I-MSNDATE",],
@@ -68,17 +68,17 @@ for i in df.index:
         wrapper = random.choice(tag_wrappers[tag])
         piece = df[tag_names[tag][0].replace("O-", "")][i]
         string = wrapper.format(piece).lower()
-        
+
         itr = string.split(" ")
         itr = itr[:-1]
         counter = 0
 
         xtr = []
-        for word in itr: 
+        for word in itr:
             l = []
             if counter == 0:
                 xtr.append([word.format(str(string).strip().replace(",", "")), tag_names[tag][0]])
-                counter +=1 
+                counter +=1
             else:
                 xtr.append([word.format(str(string).strip().replace(",", "")), tag_names[tag][1]])
         message.append(xtr)
@@ -97,7 +97,7 @@ for i in df.index:
 #print("\n".join(messages))
 #messages=messages[::-2]
 #print(messages[1:3])
-with open('ww1_planes.csv', 'w') as f:
+with open('ww2_planes.csv', 'w') as f:
     for msg in messages:
         for part in msg:
             for word in part:
