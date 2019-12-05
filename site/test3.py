@@ -11,11 +11,15 @@ def main():
    #trainer = ModelTrainer()
    #trainer.train(training_model, dataset)
 
+   loader = DataHandler("extraction/datasets/MITMovie_dataset.csv")
+   dataset = loader.get_dataset()
+   training_model = BiLstm("movie")
+
    plane_model = ExtractionModel("ww1-planes", "ww1-planes2")
    sent = "unit: NO. 55 SQDN bl: 226.0 dept: DAY to PIRMASENS dt: 1917-10-29 desig: AIRCO DH4 DAY BOMBER dummy"
    sent2 = "unit: no. 55 sqdn payload: 224.0kg day to metz-sablon railway siding & station"
    l = plane_model.extract(sent2)
-   #l = plane_model.extrac
+   #l = plane_model.extract
    print(l)
 
    movie_mode = ExtractionModel("movie", "movie3")
