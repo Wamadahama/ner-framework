@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../../../favicon.ico">
+
+	<title>NLP4NM</title>
+
+		<link href="static/bootstrap.min.css" rel="stylesheet">
+		<script src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+
+	<!-- Custom styles for this template -->
+	<link href="" rel="stylesheet">
+	<style>
+	 .grp {
+	     padding-top:15px;
+	 }
+
+	 .pad-to-center {
+	     padding-top: 5vh;
+	 }
+
+	 .pad-down {
+	     padding-top: 5vh;
+	 }
+	 .vertical-line {
+	     border-left: 1px blue;
+	 }
+
+	 .big-link {
+	     font-size: 24px;
+	 }
+
+	 .small-link {
+	     padding-top: 5px;
+	     font-size: 20px;
+	 }
+	</style>
+    </head>
+
+	<div role="main" class="container">
+
+	    <nav class="navbar navbar-expand-md navbar-light bg-light">
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+		    <ul class="navbar-nav">
+			<li class="nav-item">
+			    <a class="nav-link big-link">NLP4NM</strong>&nbsp; |</a>
+			    <div class="vertical-line"></div>
+			</li>
+			<li {% if request.path == '/' %} class="active nav-item small-link"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/">Select model <span class="sr-only">(current)</span></a>
+			</li>
+			<li>&nbsp;</li>
+			<li {% if request.path == '/select-model' %} class="active nav-item small-link" {% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/select-model">Input message</a>
+			</li>
+			<li {% if request.path == '/output' %} class="active nav-item small-link"{% endif %} class="nav-item small-link">
+			    <a class="nav-link" href="/output">Results</a>
+			</li>
+		    </ul>
+
+		    <ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+			    <strong>Selected model: </strong> <p id='selectedModel'>{{ session['selected_model']}}</p>
+			</li>
+		    </ul>
+		</div>
+	    </nav>
+        <div>
+            {% block body %} {% endblock %}
+        </div>
+    </div>
+{% include "footer.html" %}

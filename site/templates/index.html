@@ -1,0 +1,55 @@
+{% extends "header.html" %}
+{% block body %}
+<!--Body-->
+
+<div class="row justify-content-md-center justify-content-lg-center">
+    <div class="col-lg-10">
+
+	<div id="description" class="model-description pad-down">
+	    <h4>Model Description</h4>
+	    <p class="lead" id="model-description"></p>
+	</div>
+
+	<div class="pad-to-center">
+
+	    <h4>Select model</h4>
+
+	    <form action="/select-model" method = "POST">
+		<div class="input-group">
+		    <select id="model-select" name="model-select" class="custom-select" onChange="load_description(this.value)">
+			<option value="0">Select a model</option>
+			{% for model in models %}
+			<option value="{{ model[0] }}">{{ model[1] }}</option>
+			{% endfor %}
+		    </select>
+		    <input class="btn btn-primary" style="padding:-5px" type="submit" value="Select">
+		</div>
+	    </form>
+	    
+
+	</div>
+    </div>
+</div>
+
+	    <script type='text/javascript'>
+	     $(document).ready(function() {
+		 $("#description").hide()
+	     });
+	     function load_description(model_id){
+		 if(model_id == 0) {
+		     $("#description").hide()
+		 } else {
+		     $("#description").show()
+		     $.ajax({
+			 type: 'GET',
+			 url: "model/" + model_id,
+			 success: function (model) {	
+			     let description = JSON.parse(model).description;
+			     $('#model-description').text(description)
+			 }
+		     });
+		 }
+	     }
+	    </script>
+{% endblock %}
+
