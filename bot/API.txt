@@ -1,0 +1,12 @@
+OAuth Access Token
+xoxp-766027024356-766030383188-936954469141-be33e1731638b4f541d012e9e12f98cd
+
+Bot User OAuth Access Token
+xoxb-766027024356-936954477045-wxdJyZdRESgI3rS2U6K5RTPx
+
+Webhook
+https://hooks.slack.com/services/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
+https://hooks.slack.com/services/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
+
+https://www.fullstackpython.com/blog/build-first-slack-bot-python.html
+
