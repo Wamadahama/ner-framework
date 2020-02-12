@@ -21,7 +21,7 @@ class Optimizer:
 
     def thread_changeUnits(self, iter, dataset, num_units, num_epochs):
         units_name = self.groupname+"_units"+str(iter)
-        num_units += 64
+        num_units += 128
         training_model1 = BiLstm(units_name, self.groupname, dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
         # training_model1 = BiLstm_2layers(units_name, "movie", dataset, (0,0), 160, num_units, 0.1, 0.1, 100, 32, num_epochs)
         trainer = ModelTrainer()
