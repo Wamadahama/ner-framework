@@ -1,6 +1,8 @@
 import numpy as np
 import os
 import json
+from ..vocab.vocabulary import load_global_vocabulary, merge_vocabs
+from ..config import * 
 
 class ModelTrainer:
     """Class for training a NER model"""
@@ -32,13 +34,13 @@ class ModelTrainer:
                +-- Model.json       -> Definition of the model
                +-- Vocabulary.json  -> Mapping of the words used in the model to numerical values
         """
-        save_dir = "extraction/model/models/" + model_info.group + "/" + model_info.name + "/"
+#        save_dir = "extraction/model/models/" + model_info.group + "/" + model_info.name + "/"
+
+        save_dir = config['models-directory'] + model_info.group + "/" + model_info.name + "/"
         print("saving to " + save_dir)
 
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
-
-
 
         model_json = trained_model.to_json()
         with open(save_dir+"Model.json", "w") as json_file:
@@ -51,8 +53,9 @@ class ModelTrainer:
             dict_item["word"] = word
             dict_item["index"] = index
             vocab_list.append(dict_item)
+        #print(vocab_list)
 
-        vocab_json = json.dumps(vocab_list)
+        vocab_json = json.dumps(merge_vocabs(load_global_vocabulary(), vocab_list))
 
         tags = json.dumps({"categories": list(dataset.categories)})
 
