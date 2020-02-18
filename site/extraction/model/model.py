@@ -12,9 +12,9 @@ class BaseModel:
         self.input_shape = input_shape # Input shape
 
 class BiLstm(BaseModel):
-    """Bi-Lstm model information"""
+    """bi-lstm model information"""
     def __init__(self, name, group, dataset, input_shape, lstm_units, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs):
-        """ All information required for training """
+        """ all information required for training """
         super().__init__(name, group, dataset, input_shape)
         self.lstm_units = lstm_units # TODO: write a method for determining units by default
         self.dropout = dropout # Dropout layer
@@ -24,6 +24,7 @@ class BiLstm(BaseModel):
         # Training hyperparameters
         self.batch_size = batch_size
         self.epochs = epochs
+
 
     def get_model(self):
         try:

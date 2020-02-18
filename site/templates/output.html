@@ -19,7 +19,7 @@
 		    {% if value == 'O' %}
 		    {{ word }}
 		    {% else %}
-		    <mark style="color: {{ color_set[tags.index(value)] }}">{{ word }}</mark>
+		    <span style="color: {{ color_set[tags.index(value)] }}">{{ word }}</span>
 		    {% endif %}
 		    {% endfor %}
 
@@ -48,6 +48,10 @@
 		    {% endfor %}
 		</tbody>
 	    </table>
+	</div>
+
+	<div class="col-lg-12">
+	    {{ text }}
 	</div>
 </div>
 {% endblock %}

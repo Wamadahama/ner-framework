@@ -1,0 +1,30 @@
+tag_names = [
+
+   ["O-naf",
+    "I-naf",],
+
+    ["O-tons_of_he",
+    "I-tons_of_he",],
+
+   ["O-takeoff_base",
+     "I-takeoff_base",],
+
+    ["O-tgt_location",
+     "I-tgt_location",],
+
+    ["O-tgt_industry",
+     "I-tgt_industry",],
+
+    ["O-msndate",
+     "I-msndate",],
+
+    ["O-mds",
+     "I-mds",]
+
+#     ["O-NUMBEROFPLANESATTACKING",
+      #"I-NUMBEROFPLANESATTACKING"],
+
+   # ["O-ENEMYACTION",
+   #  "I-ENEMYACTION"]
+#    "O"
+]
