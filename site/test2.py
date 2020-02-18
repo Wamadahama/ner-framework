@@ -20,11 +20,11 @@ def main():
     #rest is always fixed
     # optimalModel = Optimizer(dataset, modelgroup="re3d", initialUnits = 224, initialEpochs = 6).getOptimizedModel() #TODO: modelname and modelGroup should be dynamic
     # Training with units: 352 epochs: 11
-    #num_units = 256
-    #num_epochs = 1
-    #initial_model = BiLstmCRF("movie001", "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
-    #trainer = ModelTrainer()
-    #initial_trained_model = trainer.train(initial_model, dataset)
+    num_units = 256
+    num_epochs = 1
+    initial_model = BiLstmCRF("movie001", "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
+    trainer = ModelTrainer()
+    initial_trained_model = trainer.train(initial_model, dataset)
 
     # iter = 1
     # while True:

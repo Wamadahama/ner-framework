@@ -2,19 +2,23 @@ import numpy as np
 import os
 import json
 from ..vocab.vocabulary import load_global_vocabulary, merge_vocabs
+from keras_contrib.layers import CRF
+
 
 class ModelTrainer:
     """Class for training a NER model"""
-    def __init__(self, model=None, dataset=None):
+    def __init__(self, model=None, dataset=None, loss_function=None):
         self.model = model
         self.dataset = dataset
+        self.loss_function = loss_function
 
     def train(self,model, dataset):
 #        try:
             # Get the layers of the model and then train
-        model_layout = model.get_model()
+        model_layout,loss = model.get_model()
 
-        model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+        #model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+        model_layout.compile(optimizer="adam", loss=loss, metrics=["accuracy"])
         model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
                             batch_size=model.batch_size, epochs=model.epochs)
 

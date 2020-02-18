@@ -66,7 +66,7 @@ class BiLstmCRF(BaseModel):
         crf = CRF(self.dataset.n_tags)
         out  = crf(time_d)
         model = Model(input, out)
-        return model
+        return (model, crf.loss_function)
 
         #except Exception as e:
         #    print("Unable to compile model") # more descriptive errors
