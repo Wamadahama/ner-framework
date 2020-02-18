@@ -51,10 +51,25 @@ class CrossValidator:
             out.append(out_i)
         return out
 
+    # def script():
+    #     for layers in range(10) # this is inputSize:
+    #         layersSize = layers*10
+            # run LSTM with layersSize
+            # save f1 score in arr1
+            # if the next 2 f1 score is decreasing, stop
+            # findMax(arr1) = [a,b,c,d,max,e,f,g]
+            # compare the d and the e, and if e> d => layersSize is between max and e.
+            # repeat this between layersSize of max and e
+            # stop as soon as 2 of the f1 decrease
+        # let inputSize = N
+        #  For this one, you run the model N/10 + 10
+        # for the k-fold, you run it k times
+        # so in total it is k(N/10 + 10)
+
     def compare(self):
 
         f_scores = []
-        max_fscore = -666
+        max_fscore = 0
         max_index = -666
         for mn in self.model_names:
             folder_path = 'extraction/model/models/' + self.model_group + '/' + mn
@@ -108,5 +123,10 @@ class CrossValidator:
             if f_scores[i] > max_fscore:
                 max_fscore = f_scores[i]
                 max_index = i
+
+        #to change the epochs
+        #REMOVE this if statement when not crossvalidating thru optimizer
+        if max_fscore == 0.0:
+            max_index = 1
 
         return self.model_names[max_index]
