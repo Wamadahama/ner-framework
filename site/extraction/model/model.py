@@ -1,8 +1,8 @@
-from tensorflow.keras import Input
-from tensorflow.keras.models import Model, Sequential
-from keras.layers.merge import add
+from keras import Input
+from keras.models import Model, Sequential
+#from tensorflow.keras.layers.merge import add
 from keras_contrib.layers import CRF
-from tensorflow.keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional, Flatten, Lambda
+from keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional, Flatten, Lambda
 
 class BaseModel:
     def __init__(self, name, group, dataset, input_shape):
@@ -56,21 +56,21 @@ class BiLstmCRF(BaseModel):
         self.epochs = epochs
 
     def get_model(self):
-        try:
-            input = Input(shape=(self.dataset.max_len, ))
-            embedding = Embedding(input_dim=self.dataset.n_words, output_dim = self.embedding_output_dimensions, input_length = self.dataset.max_len)(input)
-            lstm_layer = Bidirectional(LSTM(units=self.lstm_units, return_sequences=True,
-                                            recurrent_dropout=self.recurrent_dropout,
-                                            dropout=self.dropout))(embedding)
-            time_d = TimeDistributed(Dense(self.dataset.n_tags, activation='softmax'))(lstm_layer)
-            crf = CRF(self.dataset.n_tags+1)
-            out  = crf(time_d)
-            model = Model(input, out)
-            return model
+        #try:
+        input = Input(shape=(self.dataset.max_len, ))
+        embedding = Embedding(input_dim=self.dataset.n_words, output_dim = self.embedding_output_dimensions, input_length = self.dataset.max_len)(input)
+        lstm_layer = Bidirectional(LSTM(units=self.lstm_units, return_sequences=True,
+                                        recurrent_dropout=self.recurrent_dropout,
+                                        dropout=self.dropout))(embedding)
+        time_d = TimeDistributed(Dense(self.dataset.n_tags, activation='softmax'))(lstm_layer)
+        crf = CRF(self.dataset.n_tags)
+        out  = crf(time_d)
+        model = Model(input, out)
+        return model
 
-        except Exception as e:
-            print("Unable to compile model") # more descriptive errors
-            print(e)
+        #except Exception as e:
+        #    print("Unable to compile model") # more descriptive errors
+        #    print(e)
 
 class BiLstm_2layers(BaseModel):
     """Bi-Lstm model information"""
