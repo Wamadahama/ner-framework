@@ -29,7 +29,6 @@ def read_json(filename, output='json'):
     if output == 'pairs-list':
         # [ { "word" : "area", "index": 0}, ...]
         pairs = json.loads(raw_json)
-        print(raw_json)
         return { pair["word"]:pair["index"] for pair in pairs}
     elif output == 'json':
         return raw_json

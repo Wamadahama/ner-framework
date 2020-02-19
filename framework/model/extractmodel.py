@@ -56,6 +56,7 @@ class ExtractionModel:
             self.vocabulary = read_json(vocab_file, output='dict')
         self.vocabulary_with_index = read_json(vocab_file, output='dict')
 
+        #print(self.vocabulary_with_index)
         print(self.vocabulary["gosling"])
 
         #if "ENDPAD" not in self.vocabulary:
@@ -94,12 +95,20 @@ class ExtractionModel:
         input_vector = []
         for word in text:
             if word in self.vocabulary:
+                print("{} | {}".format(word, self.vocabulary[word]))
                 input_vector.append(self.vocabulary[word])
             else:
+                print(word)
                 input_vector.append(self.vocabulary["xxxPADDINGxxx"])
+
+        print(text)
+        print(len(text), len(input_vector))
+        print(input_vector)
 
         # perform extraction
         prediction = self.Model.predict(np.array([input_vector]))
+        print(prediction)
+        print(len(prediction[0]))
         prediction = np.argmax(prediction, axis=-1)
 
         #print(text)
@@ -108,6 +117,7 @@ class ExtractionModel:
         for w,pred in zip(input_vector, prediction[0]):
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
+                   # print(w, pair["index"])
                     word = pair['word']
                     #if pred > 25:
                     #    pred = 5
