@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
-from tensorflow.keras.models import Model, load_model, model_from_json
+from keras.models import Model, load_model, model_from_json
+from keras_contrib.layers import CRF 
+from keras_contrib.losses import crf_loss
 from ..util.models import *
 from ..util.file import read_json
 
@@ -67,11 +69,12 @@ class ExtractionModel:
 
         try:
             self.model_file = model_file
-            self.Model = model_from_json(read_json(model_file, output='json'))
+            self.Model = model_from_json(read_json(model_file, output='json'), custom_objects={'CRF': CRF,'crf_loss': crf_loss})
             self.Model.load_weights([file for file in model_files if "ModelWeights.h5" in file][0])
             print("Done loading model")
-        except:
+        except Exception as e:
             print("Unable to load model")
+            print(e)
             return
 
     #TODO: deal with punctuation (better split)
@@ -79,7 +82,7 @@ class ExtractionModel:
         """ Given a text return the extractions. Uses the model loaded in the self.load_pretrianed_model """
         # prepare text
         text = text.lower().split(' ')
-
+        print(self.Model.layers[0].output_shape)
         # add end padding to the vector
         for i in range(self.Model.layers[0].output_shape[0][1]): # [(n, m)]
             if i >= len(text):

@@ -15,14 +15,16 @@ class ModelTrainer:
     def train(self,model, dataset):
 #        try:
             # Get the layers of the model and then train
-        model_layout,loss = model.get_model()
+        #model_layout,loss = model.get_model()
+        model_layout = model.get_model()
 
-        #model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-        model_layout.compile(optimizer="adam", loss=loss, metrics=["accuracy"])
+        model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+        #model_layout.compile(optimizer="adam", loss=loss, metrics=["accuracy"])
         model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
                             batch_size=model.batch_size, epochs=model.epochs)
 
         self.save_model(model, model_layout, dataset) # store the trained model to disk
+
 
         return model_layout
 #        except Exception as e:

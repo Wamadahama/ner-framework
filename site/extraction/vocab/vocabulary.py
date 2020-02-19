@@ -1,8 +1,7 @@
 import json
 import os
 
-
-GLOBAL_VOCAB_FILE = 'framework/vocab/GlobalVocab.json'
+from ..config import * 
 
 def generate_vocab_from_list():
     """
@@ -24,7 +23,7 @@ def generate_vocab_from_list():
 
 def load_global_vocabulary(filename=""):
     if filename == "":
-        with open(GLOBAL_VOCAB_FILE, 'r') as f:
+        with open(config['global-vocab-file'], 'r') as f:
             vocab = json.load(f)
     else:
         with open(filename, 'r') as f:

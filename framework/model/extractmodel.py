@@ -3,11 +3,12 @@ import numpy as np
 from tensorflow.keras.models import Model, load_model, model_from_json
 from ..util.models import *
 from ..util.file import read_json
+from ..config import * 
 
 
 class ExtractionModel:
     """Loads existing models and provides methods like predict to use them"""
-    def __init__(self, model_group=None, model_name=None, models_path="extraction/model/models/"):
+    def __init__(self, model_group=None, model_name=None, models_path=config['models-directory']):
 
         if model_name == None or model_name == "":
             self.model_name = model_name
@@ -48,10 +49,14 @@ class ExtractionModel:
         vocab_file = [file for file in model_files if "Vocabulary.json" in file][0]
         # TODO: optimize this down to one call
         try:
+            print("Loading Vocabluary.json by pairs-list")
             self.vocabulary = read_json(vocab_file, output='pairs-list')
         except:
+            print("Failed to load Vocabulary.json by pairs-list, trying dict...")
             self.vocabulary = read_json(vocab_file, output='dict')
         self.vocabulary_with_index = read_json(vocab_file, output='dict')
+
+        print(self.vocabulary["gosling"])
 
         #if "ENDPAD" not in self.vocabulary:
         #    key = len(self.vocabulary)+1
@@ -97,9 +102,8 @@ class ExtractionModel:
         prediction = self.Model.predict(np.array([input_vector]))
         prediction = np.argmax(prediction, axis=-1)
 
-        print(text)
+        #print(text)
 
-        #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
         for w,pred in zip(input_vector, prediction[0]):
             for pair in self.vocabulary_with_index:
