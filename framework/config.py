@@ -1,4 +1,4 @@
 config = {
     'models-directory': 'framework/model/models/',
-    'gloabl-vocab-file': 'framework/vocabulary/GlobalVocab.json' 
+    'global-vocab-file': 'framework/vocab/GlobalVocab.json' 
 }

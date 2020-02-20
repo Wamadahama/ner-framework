@@ -28,7 +28,7 @@ def load_global_vocabulary(filename=""):
             vocab = json.load(f)
     else:
         with open(filename, 'r') as f:
-            vocab = json.load(f)
+            ocab = json.load(f)
     return vocab
 
 def merge_vocabs(vocab1, vocab2):
@@ -43,6 +43,9 @@ def merge_vocabs(vocab1, vocab2):
     ]
     """
     index_start = len(vocab1)
+    print("Size of vocab: {}".format(index_start))
+    print("size of vocab1: {}".format(len(vocab1)))
+    print("size of vocab2: {}".format(len(vocab2)))
     for item in vocab2:
         dict_item = {}
         #print(word, index)
@@ -50,4 +53,5 @@ def merge_vocabs(vocab1, vocab2):
         dict_item["index"] = item["index"]
         index_start += 1 
         vocab1.append(dict_item)
+    print(len(vocab1))
     return vocab1

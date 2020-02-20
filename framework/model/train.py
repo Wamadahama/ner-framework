@@ -55,7 +55,8 @@ class ModelTrainer:
             vocab_list.append(dict_item)
         #print(vocab_list)
 
-        vocab_json = json.dumps(merge_vocabs(vocab_list, load_global_vocab()))
+        vocab_json = json.dumps(vocab_list)
+        #vocab_json = json.dumps(vocab_list, load_global_vocabular)
 
         tags = json.dumps({"categories": list(dataset.categories)})
 
