@@ -3,7 +3,7 @@ from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional, Flatten, Lambda 
 
 class BaseModel:
-    def __init__(self, name, group, dataset, input_shape):
+    def __init__(self, name='null', group='null', dataset='null', input_shape='null'):
         self.name = name # name of the model 
         self.group = group 
         self.dataset = dataset  # Dataset() object
@@ -11,7 +11,7 @@ class BaseModel:
 
 class BiLstm(BaseModel):
     """bi-lstm model information"""
-    def __init__(self, name, group, dataset, input_shape, lstm_units, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs):
+    def __init__(self, name='null', group='null', dataset='null', input_shape='null', lstm_units='0', dropout=='null', recurrent_dropout='null', embedding_output_dimensions='null', batch_size='0', epochs='0'):
         """ all information required for training """
         super().__init__(name, group, dataset, input_shape)
         self.lstm_units = lstm_units # todo: write a method for determining units by default
@@ -39,7 +39,7 @@ class BiLstm(BaseModel):
 
 class BiLstm2(BaseModel):
     """bi-lstm model information"""
-    def __init__(self, name, group, dataset, input_shape, lstm_units1, lstm_units2, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs):
+    def __init__(self, name='null', group='null', dataset='null', input_shape='null', lstm_units1='0', lstm_units2='0', dropout='0', recurrent_dropout='0', embedding_output_dimensions='0', batch_size, epochs='0'):
         """ all information required for training """
         super().__init__(name, group, dataset, input_shape)
         self.lstm_units1 = lstm_units1 # todo: write a method for determining units by default
