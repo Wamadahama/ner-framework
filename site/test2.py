@@ -1,6 +1,6 @@
 from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
-from extraction.model.model import Model, BiLstm, BiLstmCRF
+from extraction.model.model import Model, BiLstm, BiLstmCRF, BiLstm_2layers, BiLstm_3layers
 from extraction.model.train import ModelTrainer
 from extraction.model.crossvalidation import CrossValidator
 from extraction.model.optimize import Optimizer
@@ -25,9 +25,10 @@ def main():
 # Training with units: 352 epochs: 11
 
 
-    num_units = 256
-    num_epochs = 1
-    initial_model = BiLstmCRF("movie001", "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
+    num_units = 216
+    num_epochs = 2
+    num_layers = 4
+    initial_model = BiLstm_3layers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs)
     trainer = ModelTrainer()
     initial_trained_model = trainer.train(initial_model, dataset)
 
