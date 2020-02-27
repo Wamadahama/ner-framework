@@ -11,25 +11,26 @@ def main():
     loader = DataHandler("extraction/datasets/MITMovie_dataset.csv")
     dataset = loader.get_dataset()
 
-    num_units = 216
+    num_units = 186
     num_epochs = 2
-    num_layers = 4
+    num_layers = 3
     unit_step = 16
-    initial_model = BiLstm_3layers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs)
+    batch_size = 64
+    initial_model = BiLstm_3layers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, batch_size, num_epochs)
 
     trainer = ModelTrainer()
     initial_trained_model = trainer.train(initial_model, dataset)
     iter = 1
     while True:
         units_name = "movie_units"+str(iter)
-        training_model = BiLstm_3layers(units_name, "movie", dataset, (0,0), num_units+unit_step, num_layers, 0.1, 0.1, 70, 64, num_epochs)
+        training_model = BiLstm_3layers(units_name, "movie", dataset, (0,0), num_units+unit_step, num_layers, 0.1, 0.1, 70, batch_size, num_epochs)
         trainer = ModelTrainer()
-        trained_model1 = trainer.train(training_model1, dataset)
+        trained_model1 = trainer.train(training_model, dataset)
         
         epochs_name = "movie_epochs"+str(iter)
-        trained_model = BiLstm_3layers(epochs_name, "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs+1)
+        training_model = BiLstm_3layers(epochs_name, "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, batch_size, num_epochs+1)
         trainer = ModelTrainer()
-        trained_model2 = trainer.train(training_model2, dataset)
+        trained_model2 = trainer.train(training_model, dataset)
          
         if iter == 1:
             best_model = CrossValidator(dataset, "movie", ["movie001", units_name, epochs_name]).compare()
