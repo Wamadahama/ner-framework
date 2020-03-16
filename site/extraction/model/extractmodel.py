@@ -41,7 +41,7 @@ class ExtractionModel:
 
         if self.model_group == None:
             self.model_group = model_group
-        
+
         model_files = read_model_files(self.models_path + self.model_group + "/" + self.model_name)
 
         # Read the vocabulary,
@@ -97,14 +97,16 @@ class ExtractionModel:
         prediction = self.Model.predict(np.array([input_vector]))
         prediction = np.argmax(prediction, axis=-1)
 
+        print(text)
+
         #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
         for w,pred in zip(input_vector, prediction[0]):
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
                     word = pair['word']
-                    if pred > 25:
-                        pred = 5
+                    #if pred > 25:
+                    #    pred = 5
                     category = self.categories[pred]
                     return_dict[word] = category
         return return_dict

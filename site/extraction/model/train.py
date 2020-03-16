@@ -9,6 +9,7 @@ class ModelTrainer:
         self.model = model
         self.dataset = dataset
 
+<<<<<<< HEAD
     # def recall_m(self, y_true, y_pred):
     #     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
     #     possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
@@ -34,13 +35,23 @@ class ModelTrainer:
             model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
             model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
                              batch_size=model.batch_size, epochs=model.epochs)
+=======
+    def train(self,model, dataset):
+#        try:
+            # Get the layers of the model and then train
+        model_layout = model.get_model()
 
-            self.save_model(model, model_layout, dataset) # store the trained model to disk
+        model_layout.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+        model_layout.fit(np.array(dataset.x_train), np.array(dataset.y_train), validation_split=0.1,
+                            batch_size=model.batch_size, epochs=model.epochs)
+>>>>>>> 42b577b0eb7d8dc18b3e5c46fda70d78c7ddf687
 
-            return model_layout
-        except Exception as e:
-            print(e)
-            print("Unable to train model")
+        self.save_model(model, model_layout, dataset) # store the trained model to disk
+
+        return model_layout
+#        except Exception as e:
+#            print(e)
+#            print("Unable to train model")
 
 
     def save_model(self, model_info, trained_model, dataset):

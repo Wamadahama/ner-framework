@@ -113,20 +113,70 @@ def output():
         t = cur.fetchall()
         model = ExtractionModel(t[0][0], t[0][1])
         i = model.extract(results)
-        tags = get_category_colors(i.values())
         new_dict={}
         for key, value in i.items():
-            new_dict[key] = value.replace('B-', '').replace('I-', '')
-        color_set = ["#004c97", "#ff9e15#", "#a5cd50", "#2dbecd", "#e61e50"]
-        return render_template("output.html", extraction=new_dict, tags=tags, original_word_set=results.split(" "), color_set=color_set)
+            new_dict[key] = value.replace('B-', '').replace('I-', '').replace('O-', '')
+
+        text,mp = get_extraction_colors(new_dict, results.split(" "))
+        tags = get_category_colors(i.values())
+        color_set = ["#004c97", "#ff9e15", "#a5cd50", "#2dbecd", "#e61e50", "#007944, #fff, #111"]
+        return render_template("output2.html", extraction=text, tags=tags, original_word_set=results.split(" "), color_set=mp)
     elif request.method == 'GET':
         return render_template("output.html", input_text=None)
 
 
 def get_category_colors(tags):
-    color_set = ["#004c97", "#ff9e15#", "#a5cd50", "#2dbecd", "#e61e50"]
-    tags = [tag.replace('B-', '').replace('I-', '') for tag in tags]
+    color_set = ["#004c97", "#ff9e15", "#a5cd50", "#2dbecd", "#e61e50", "#007944","#fff","#111"]
+    tags = [tag.replace('B-', '').replace('I-', '').replace('O-', '') for tag in tags]
     return list(set(tags))
+
+
+def search_color(search_tag,color_map):
+    tags = [tag for tag,color in color_map]
+    colors = [color for tag,color in color_map]
+    tag_idx = tags.index(search_tag)
+    if tag_idx != -1:
+        return colors[tag_idx]
+
+def get_extraction_colors(extraction, orig):
+    print("original:", orig)
+    color_set = ["#004c97", "#ff9e15", "#a5cd50", "#2dbecd", "#e61e50", "#007944","#fff","#111"]
+    curr_extraction = extraction[list(extraction.keys())[0]]
+    color_map = []
+    seen_tags = [extraction[list(extraction.keys())[0]]]
+    color_map.append((list(extraction.values())[0], color_set[0]))
+    i = 0
+    wc = 0
+    final_string = "<mark>"
+    for word, tag in extraction.items():
+       # print(curr_extraction, curr_extraction == tag, word, tag)
+        if word == "xxxPADDINGxxx":
+            if(wc >= len(orig)):
+                word = ""
+            else: 
+                word = orig[wc]
+
+        if curr_extraction == tag:
+            clr = search_color(tag, color_map)
+            final_string += "<span style='color: {}'>{}</span> ".format(clr, word)
+        else:
+            final_string += "</mark>&nbsp;"
+
+            if tag not in seen_tags:
+                i+=1
+                color_map.append((tag, color_set[i]))
+
+            print(i, len(color_set))
+            seen_tags.append(tag)
+            clr = search_color(tag, color_map)
+            final_string += "<mark><span style='color: {}'>{}</span> ".format(clr, word)
+            curr_extraction = tag 
+        wc+=1
+    return (final_string, color_map)
+            
+        
+    #tags = [tag.replace('B-', '').replace('I-', '').replace('O-', '') for tag in tags]
+    #return list(set(tags))
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=8000)

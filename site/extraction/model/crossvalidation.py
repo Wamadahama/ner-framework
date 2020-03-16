@@ -20,7 +20,7 @@ what will be passed is modelName
 '''
 
 import tensorflow as tf
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 import numpy as np
 from seqeval.metrics import precision_score, recall_score, f1_score, classification_report
 import json
