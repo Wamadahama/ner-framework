@@ -1,0 +1,38 @@
+Given: Preheat the oven to 325 degrees F (165 degrees C)
+
+Apply part of speech tagging: 
+
+[('Preheat', 'VB'), ('the', 'DT'), 
+	('oven', 'NN'), ('to', 'TO'), ('325', 'CD'), ('degrees', 'NNS'), ('F', 'NN'), 
+	('(', '('), ('165', 'CD'), ('degrees', 'NNS'), ('C', 'NNP'), 
+(')', ')')]
+
+Apply the grammar to create chunks:
+
+Instrument:{<CD>?<JJ><NN>+}
+Measurement: {<CD>(<NN>|<NNS>)+}
+
+The grammar will produce: 
+(S
+  Preheat/VB
+  the/DT
+  oven/NN
+  to/TO
+  (Measurement 325/CD degrees/NNS F/NN)
+  (/(
+  (Measurement 165/CD degrees/NNS))
+  
+Which we can convert into the format we need for training:
+
+Preheat,O
+the,O
+oven,O
+to,O
+325,B-Measurement
+degrees,I-Measurement
+F,I-Measurement
+(,O
+165,B-Measurement
+degrees,I-Measurement
+C,O
+),O

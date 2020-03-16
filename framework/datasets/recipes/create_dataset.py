@@ -101,15 +101,19 @@ def main():
     tagger = StanfordPOSTagger(model_filename=home + "/nlp4nm/packages/stanford-postagger/models/wsj-0-18-bidirectional-distsim.tagger",
                        path_to_jar=home+"/nlp4nm/packages/stanford-postagger/stanford-postagger.jar")
 
-    n=1024
+    n=11
 
-    for i in range(1, n):
+    for i in range(n, n+1):
         item = get_item(dataset, keys,i)
         tokenized_text = word_tokenize(item)
         #pos_tags = nltk.pos_tag(tokenized_text)
         pos_tags = apply_fixes(tagger.tag(tokenized_text))
         #print(pos_tags)
-        chunked_sent = chunk(pos_tags)
+        chunked_sent = chunk(pos_tags[0:12])
+        print(item)
+        print(pos_tags[0:12])
+        print(chunked_sent)
+        #chunked_sent.draw()
         #print(type(chunked_sent))
         connl_tags = tree2conlltags(chunked_sent)
         for tag in connl_tags:

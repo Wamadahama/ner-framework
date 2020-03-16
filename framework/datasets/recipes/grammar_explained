@@ -1,0 +1,12 @@
+Grammar regexp: 
+
+Instrument:{<CD>?<JJ><NN>+}
+Measurement: {<CD>(<NN>|<NNS>)+}
+          
+
+Grammar explained 
+
+Instrument  := Optional Numeral + Adjective + One or more nouns
+	ie - large pan, 3x5 loaf pan
+Measurement := Numeral + One or more nouns, proper nouns, plural nouns 
+	ie - 3 hours, 350 degrees F, 10 hours, 3 cups  
