@@ -107,7 +107,7 @@ class BiLstm_2layers(BaseModel):
             print(e)
 
 
-class BiLstm_3layers(BaseModel):
+class BiLstm_nlayers(BaseModel):
     """Bi-Lstm model information"""
     def __init__(self, name, group, dataset, input_shape, lstm_units, num_layers, dropout, recurrent_dropout, embedding_output_dimensions, batch_size, epochs):
         """ All information required for training """

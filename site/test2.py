@@ -1,6 +1,6 @@
 from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
-from extraction.model.model import Model, BiLstm, BiLstmCRF, BiLstm_2layers, BiLstm_3layers
+from extraction.model.model import Model, BiLstm, BiLstmCRF, BiLstm_2layers, BiLstm_nlayers
 from extraction.model.train import ModelTrainer
 from extraction.model.crossvalidation import CrossValidator
 from extraction.model.optimize import Optimizer
@@ -28,7 +28,7 @@ def main():
     num_units = 216
     num_epochs = 2
     num_layers = 4
-    initial_model = BiLstm_3layers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs)
+    initial_model = BiLstm_nlayers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs)
     trainer = ModelTrainer()
     initial_trained_model = trainer.train(initial_model, dataset)
 
