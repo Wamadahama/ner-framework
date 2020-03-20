@@ -1,6 +1,6 @@
 from extraction.model.extractmodel import ExtractionModel
 from extraction.model.dataset import DataHandler
-from extraction.model.model import Model, BiLstm, BiLstmCRF
+from extraction.model.model import Model, BiLstm, BiLstmCRF, BiLstm_2layers, BiLstm_nlayers
 from extraction.model.train import ModelTrainer
 from extraction.model.crossvalidation import CrossValidator
 from extraction.model.optimize import Optimizer
@@ -10,27 +10,28 @@ import time
 
 def main():
     # Test Model training:
+
 #from dataset import DataHandler
     #d_set1 = DataHandler('../../../nlp-model/dataset/MITMovie_dataset.csv')
     #sentences = d_set1.getSentences()
     #X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = d_set1.get_train_test(sentences=sentences, test_size=0.1, max_len=30)
-    loader  = DataHandler("extraction/datasets/MITMovie_dataset.csv")
+    loader  = DataHandler("extraction/datasets/re3d_dataset.txt")
     dataset = loader.get_dataset()
-    print(dataset.max_len)
-    print(dataset.n_words)
-    print(dataset.n_tags)
-    #rest is always fixed
+
+    print(dataset)
+                            #rest is always fixed
     # optimalModel = Optimizer(dataset, modelgroup="re3d", initialUnits = 224, initialEpochs = 6).getOptimizedModel() #TODO: modelname and modelGroup should be dynamic
-    # Training with units: 352 epochs: 11
-    num_units = 16
-    num_epochs = 1
-    initial_model = BiLstmCRF("movie001", "movie", dataset, (0,0), num_units, 0.1, 0.1, 100, 32, num_epochs)
+
+# Training with units: 352 epochs: 11
+
+
+    num_units = 216
+    num_epochs = 2
+    num_layers = 4
+    initial_model = BiLstm_nlayers("movie001", "movie", dataset, (0,0), num_units, num_layers, 0.1, 0.1, 70, 64, num_epochs)
     trainer = ModelTrainer()
     initial_trained_model = trainer.train(initial_model, dataset)
 
-    movie001 = ExtractionModel("movie", "movie001")
-    print(movie001.extract("Drive is a 2011 movie starring Ryan Gosling as an unnamed Hollywood stunt driver who finds himself involved in a large crime syndicate"))
-    
     # iter = 1
     # while True:
     #     units_name = "movie_units"+str(iter)
