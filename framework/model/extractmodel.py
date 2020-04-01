@@ -7,7 +7,7 @@ from ..util.file import read_json
 
 class ExtractionModel:
     """Loads existing models and provides methods like predict to use them"""
-    def __init__(self, model_group=None, model_name=None, models_path="../framework/model/models/"):
+    def __init__(self, model_group=None, model_name=None, models_path="framework/model/models/"):
 
         if model_name == None or model_name == "":
             self.model_name = model_name
@@ -94,13 +94,13 @@ class ExtractionModel:
                 input_vector.append(self.vocabulary["xxxPADDINGxxx"])
 
         # perform extraction
-        prediction = self.Model.predict(np.array([input_vector]))
-        prediction = np.argmax(prediction, axis=-1)
-
-        print(text)
+        prob_prediction = self.Model.predict(np.array([input_vector]))
+        prediction = np.argmax(prob_prediction, axis=-1)
+        #print(text)
 
         #print("{:14} ({:5}): {}".format("Word", "True", "Pred"))
         return_dict = {}
+        i = 0
         for w,pred in zip(input_vector, prediction[0]):
             for pair in self.vocabulary_with_index:
                 if(w == pair["index"]):
@@ -108,5 +108,5 @@ class ExtractionModel:
                     #if pred > 25:
                     #    pred = 5
                     category = self.categories[pred]
-                    return_dict[word] = category
+                    return_dict[word] = [category, prob_prediction[0][i][pred]]
         return return_dict
