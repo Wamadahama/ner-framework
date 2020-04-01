@@ -109,15 +109,14 @@ def main():
         #pos_tags = nltk.pos_tag(tokenized_text)
         pos_tags = apply_fixes(tagger.tag(tokenized_text))
         #print(pos_tags)
-        chunked_sent = chunk(pos_tags[0:12])
+        chunked_sent = chunk(pos_tags[0:6])
         print(item)
-        print(pos_tags[0:12])
         print(chunked_sent)
-        #chunked_sent.draw()
+        chunked_sent.draw()
         #print(type(chunked_sent))
-        connl_tags = tree2conlltags(chunked_sent)
-        for tag in connl_tags:
-            print("{},{}".format(tag[0], tag[2]))
+        #connl_tags = tree2conlltags(chunked_sent)
+        #for tag in connl_tags:
+        #    print("{},{}".format(tag[0], tag[2]))
         #for subtree in chunked_sent.subtrees(filter=lambda t: t.label() == 'Instrument'):
         #    print(subtree)
         #print("------ Example {} ------".format(i))
