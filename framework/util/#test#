@@ -1,0 +1,35 @@
+
+
+        #accessory_dict = {}
+
+        #accessory_dict["action_id"] = "select-model"
+        #accessory_dict["type"] = "static_select"
+        #accessory_dict["placeholder"] = {
+        #    "type": "plain_text",
+        #    "text": "Select a model"
+        #}
+
+        #options_dicts = []
+        #options_dicts.append({
+        #    "text": {
+        #    "type": "plain_text",
+        #    "text": "..."
+        #    },
+        #    "value": "..."
+        #})
+
+        #for trained_model in trained_models:
+            #inner_options_dict = {}
+            #inner_options_dict["text"] = {
+            #    "type": "plain_text",
+            #    "text": trained_model
+            #}
+            #inner_options_dict["value"] = trained_model
+            #options_dicts.append(inner_options_dict)
+
+        #accessory_dict["options"] = options_dicts
+
+        #inner_dict["accessory"] = accessory_dict
+        
+        #inner_blocks.append(inner_dict)
+        #inner_blocks.append({ "type": "divider" })

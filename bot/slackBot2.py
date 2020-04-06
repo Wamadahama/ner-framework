@@ -43,7 +43,8 @@ def createBlockMessage(str):
 
 
 def sendMessage(msg):
-    url = "https://hooks.slack.com/services/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"
+    #url = "https://hooks.slack.com/services/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"
+    url = "https://hooks.slack.com/services/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"
     # post = { "text": "{0}".format(msg) }
     post = msg
     jsoned = json.dumps(post)
@@ -112,5 +113,5 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         # print(body)
 
 
-httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
+httpd = HTTPServer(('localhost', 8001), SimpleHTTPRequestHandler)
 httpd.serve_forever()

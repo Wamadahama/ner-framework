@@ -7,7 +7,7 @@ from ..util.file import read_json
 
 class ExtractionModel:
     """Loads existing models and provides methods like predict to use them"""
-    def __init__(self, model_group=None, model_name=None, models_path="framework/model/models/"):
+    def __init__(self, model_group=None, model_name=None, models_path="../framework/model/models/"):
 
         if model_name == None or model_name == "":
             self.model_name = model_name

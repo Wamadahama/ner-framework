@@ -1,5 +1,5 @@
-from urllib import request, parse
 import json
+import urllib
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from io import BytesIO
 import os
@@ -8,30 +8,14 @@ from urllib.parse import *
 sys.path.append('../')
 from framework.model.extractmodel import ExtractionModel
 from pprint import pprint
+from flask import Flask, request, Response
 
-'''
-{
-    "channel": "C1H9RESGL",
-    "text": "Text here for notifications",
-	"blocks": [
-		{
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
-			}
-		}
-	]
-}
-'''
+app = Flask(__name__)
 
-#########global model_name
-###global model_group
-
-#model_name = "movie3"
-#model_group = "movie"
-#model = ExtractionModel("movie", "movie3")
-
+def switch_model(model_str):
+    modelgrp = model_str.split("|")
+    model_group = modelgrp[0]
+    model_name = modelgrp[1]
 
 
 def createBlockMessage(str):
@@ -49,8 +33,6 @@ def createBlockMessage(str):
     response["channel"] = "#random"
     response["text"] = "ACK"
     response["blocks"] = arr
-    response["status"] = 200
-    response["ok"]= "true"
 
     return response
 
@@ -122,19 +104,18 @@ def createModelList(models):
 
 
 def sendMessage(msg):
+    #url = "https://hooks.slack.com/services/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"
+    #url = "https://hooks.slack.com/services/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"
     url = "https://hooks.slack.com/services/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"
     # post = { "text": "{0}".format(msg) }
     post = msg
     jsoned = json.dumps(post)
     encoded_data = jsoned.encode('ascii')
-    print(post)
-    print("----")
-    print(encoded_data)
-    headers = { 'Content-Type': 'application/json', 'X-Slack-No-Retry': '1' }
+    headers = { 'Content-Type': 'application/json' }
 
     try:
-        req = request.Request(url, data=encoded_data, headers=headers)
-        resp = request.urlopen(req)
+        req = urllib.request.Request(url, data=encoded_data, headers=headers)
+        resp = urllib.request.urlopen(req)
     except Exception as em:
         print("EXCEPTION: " + str(em))
 
@@ -149,42 +130,19 @@ def do_bot_command(text):
     elif "!help" in text:
         pass
 
-global a
-a=0
-class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-
-    def __init__(self, *args, **kwargs):
-        if a == 0:
-            self.model_group = "movie"
-            self.model_name = "movie3"
-
-        self.model = ExtractionModel(self.model_group, self.model_name)
-        super().__init__(*args, **kwargs)
-
-    def switch_model(model_str):
-        a=1
-        modelgrp = model_str.split("|")
-        self.model_group = modelgrp[0]
-        self.model_name = modelgrp[1]
-
-    def do_GET(self):
+@app.route("/", methods=['POST', 'GET'])
+def handler():
+    if request.method == 'GET':
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b'Hello, world!')
-
-    def do_POST(self):
-        self.send_response(200)
-        content_length = int(self.headers['Content-Length'])
-
-        retries = self.headers['X-Slack-Retry-Num']
-        #print(self.headers['X-Slack-Retry-Reason'])
-
-        if retries != None:
-            print("Slack retry num: " + self.headers['X-Slack-Retry-Num'])
-            self.send_response(200)
-            return
-        
-        body = self.rfile.read(content_length)
+    elif request.method == 'POST':
+        content_length = int(request.headers.get('Content-Length'))
+        #print(content_length)
+        sendMessage(createBlockMessage("crazy how broken this is3"))
+        #body = self.rfile.read(content_length)
+        # print(request)
+        return "" 
         if b'payload' in body:
             body = unquote(str(body),encoding='utf-8')
             body= body.replace("payload=", "")
@@ -192,9 +150,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             body = body[:-1]
             json_data = json.loads(body)
             selected_model = json_data["actions"][0]["selected_option"]["value"]
-            self.switch_model(selected_model.split("|"))
+            switch_model(selected_model.split("|"))
         else:
+            #print(body)
             json_data = json.loads(body.decode('utf-8'))
+            self.send_response(200)
             self.end_headers()
 
             if json_data["type"] == "url_verification":
@@ -203,15 +163,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 response.write(b'Received: ')
                 response.write(body)
                 self.wfile.write(response.getvalue())
-                self.send_response(200)
-                return
 
             if json_data["event"]["type"] == "message":
                 #print("---- Test -----")
                 #print(json_data["event"]["text"][0])
                 if json_data["event"]["text"][0] != "!":
-                    #model = ExtractionModel("movie", "movie3")
-                    extraction = self.model.extract(json_data["event"]["text"])
+                    model = ExtractionModel(model_group, model_name)
+                    extraction =model.extract(json_data["event"]["text"])
                     print()
                     print("---MODEL OUTPUT---")
                     print(extraction)
@@ -242,9 +200,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                     sendMessage(response)
                 else:
                     do_bot_command(json_data["event"]["text"])
-                return
-                    
 
-httpd = HTTPServer(('localhost', 8001), SimpleHTTPRequestHandler)
-httpd.serve_forever()
-#print(createModelList(os.listdir("../framework/model/models/")))
+
+app.run(debug=True, host='localhost', port=8001)
