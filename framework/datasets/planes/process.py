@@ -82,16 +82,6 @@ for i in df.index:
             else:
                 xtr.append([word.format(str(string).strip().replace(",", "")), tag_names[tag][1]])
         message.append(xtr)
-            #else:
-            #    piece = df[tag_names[tag][1].replace("I-", "")][i]
-            #    if(len(str(piece).strip().split(" ")) <= 1):
-            #        xtr.append([word.format(str(piece).lstrip().replace(",", "")), tag_names[tag][1]])
-            #    else:
-            #        word_list = piece.split(" ")
-            #        xtr += [[word_list[0], tag_names[tag][0]]]
-            #        l = [ [w, tag_names[tag][1]] for w in piece.split(" ")[1::]]
-            #        xtr += l
-            #counter+= 1
     messages.append(message)
 
 #print("\n".join(messages))
